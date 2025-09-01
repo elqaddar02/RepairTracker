@@ -3,6 +3,7 @@ import { Search, Shield, Clock } from 'lucide-react';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import Button from '../components/ui/Button';
+import { Link } from 'react-router-dom';
 
 const Landing: React.FC = () => {
   return (
@@ -20,12 +21,14 @@ const Landing: React.FC = () => {
               Clients can follow repair status. Stores manage repairs in one dashboard.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Link to="/auth">
               <Button size="lg" className="w-full sm:w-auto">
                 Get Started
-              </Button>
+              </Button></Link>
+              <Link to="/track">
               <Button variant="outline" size="lg" className="w-full sm:w-auto">
                 Track My Repair
-              </Button>
+              </Button></Link>
             </div>
           </div>
 
