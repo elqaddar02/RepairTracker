@@ -1,19 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LogIn, UserPlus, Languages } from 'lucide-react'; // <-- Add Languages icon
-import Input from '../components/ui/Input';
-import Button from '../components/ui/Button';
-import Card, { CardHeader, CardContent } from '../components/ui/Card';
-import { useI18n } from '../i18n';
+import { LogIn, UserPlus } from 'lucide-react';
+// Update the import path below if Input exists elsewhere, e.g.:
+import Input from './Input';
+// Or, if Input does not exist, create 'Input.tsx' in the same folder with a basic implementation:
+import Button from './Button';
+// If Card.tsx exists in the same folder:
+import Card, { CardHeader, CardContent } from './Card';
+
+// Or, if Card.tsx exists in 'src/components/ui/':
+// import Card, { CardHeader, CardContent } from './Card';
+import { useI18n } from '../../i18n';
 
 const Auth: React.FC = () => {
-  const { lang, setLang, t } = useI18n();
+  const { t } = useI18n();
+
+  // Language state
+  const [lang, setLang] = useState<'fr' | 'en' | 'ar'>(
+    () => (localStorage.getItem('lang') as 'fr' | 'en' | 'ar') || 'fr'
+  );
+  useEffect(() => {
+    localStorage.setItem('lang', lang);
+  }, [lang]);
 
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
   const [userType, setUserType] = useState<'client' | 'store'>('client');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  // Remove useAuth, use local mock instead
+  // const { login, register } = useAuth();
 
   // Login form state
   const [loginData, setLoginData] = useState({
@@ -91,14 +107,12 @@ const Auth: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
-        {/* Language Selector with Icon */}
-        <div className="flex items-center justify-end mb-2 space-x-2">
-          <Languages className="w-5 h-5 text-blue-600" />
+        {/* Language Selector */}
+        <div className="flex justify-end mb-2">
           <select
             value={lang}
             onChange={e => setLang(e.target.value as 'fr' | 'en' | 'ar')}
-            className="border rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-            style={{ minWidth: 90 }}
+            className="border rounded px-2 py-1 text-sm"
           >
             <option value="ar">{t('arabic')}</option>
             <option value="fr">{t('french')}</option>

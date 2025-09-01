@@ -8,6 +8,7 @@ import Auth from './pages/Auth';
 import ClientDashboard from './pages/ClientDashboard';
 import StoreDashboard from './pages/StoreDashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import { I18nProvider } from './i18n';
 
 const DashboardRouter: React.FC = () => {
   const { user } = useAuth();
@@ -29,48 +30,50 @@ const DashboardRouter: React.FC = () => {
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <div className="App">
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<Landing />} />
-            <Route path="/track" element={<TrackRepair />} />
-            <Route path="/auth" element={<Auth />} />
-            
-            {/* Dashboard Router */}
-            <Route path="/dashboard" element={<DashboardRouter />} />
-            
-            {/* Protected Routes */}
-            <Route 
-              path="/client/dashboard" 
-              element={
-                <ProtectedRoute requiredRole="client">
-                  <ClientDashboard />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/store/dashboard" 
-              element={
-                <ProtectedRoute requiredRole="store">
-                  <StoreDashboard />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/admin/dashboard" 
-              element={
-                <ProtectedRoute requiredRole="admin">
-                  <AdminDashboard />
-                </ProtectedRoute>
-              } 
-            />
-            
-            {/* Fallback */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </div>
-      </Router>
+      <I18nProvider>
+        <Router>
+          <div className="App">
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<Landing />} />
+              <Route path="/track" element={<TrackRepair />} />
+              <Route path="/auth" element={<Auth />} />
+              
+              {/* Dashboard Router */}
+              <Route path="/dashboard" element={<DashboardRouter />} />
+              
+              {/* Protected Routes */}
+              <Route 
+                path="/client/dashboard" 
+                element={
+                  <ProtectedRoute requiredRole="client">
+                    <ClientDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/store/dashboard" 
+                element={
+                  <ProtectedRoute requiredRole="store">
+                    <StoreDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/admin/dashboard" 
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              
+              {/* Fallback */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </div>
+        </Router>
+      </I18nProvider>
     </AuthProvider>
   );
 }
