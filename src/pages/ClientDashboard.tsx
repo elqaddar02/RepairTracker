@@ -6,6 +6,7 @@ import Table, { TableHeader, TableBody, TableRow, TableHead, TableCell } from '.
 import Badge from '../components/ui/Badge';
 import Card, { CardHeader, CardContent } from '../components/ui/Card';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+import AppLayout from '../components/layout/AppLayout';
 
 const ClientDashboard: React.FC = () => {
   const [repairs, setRepairs] = useState<Repair[]>([]);
@@ -29,18 +30,16 @@ const ClientDashboard: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Navbar />
+      <AppLayout>
         <div className="flex items-center justify-center h-96">
           <LoadingSpinner size="lg" />
         </div>
-      </div>
+      </AppLayout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
+    <AppLayout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-gray-900">My Repairs</h1>
@@ -137,7 +136,7 @@ const ClientDashboard: React.FC = () => {
           </div>
         )}
       </div>
-    </div>
+    </AppLayout>
   );
 };
 

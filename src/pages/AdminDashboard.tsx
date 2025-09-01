@@ -20,6 +20,7 @@ import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import AppLayout from '../components/layout/AppLayout';
 
 const AdminDashboard: React.FC = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
@@ -70,18 +71,16 @@ const AdminDashboard: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Navbar />
+      <AppLayout>
         <div className="flex items-center justify-center h-96">
           <LoadingSpinner size="lg" />
         </div>
-      </div>
+      </AppLayout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
+    <AppLayout>
       <div className="flex">
         <div className="w-64 bg-white shadow-sm border-r">
           <div className="p-6">
@@ -194,7 +193,7 @@ const AdminDashboard: React.FC = () => {
                           cx="50%"
                           cy="50%"
                           labelLine={false}
-                          label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                          label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
                           outerRadius={80}
                           fill="#8884d8"
                           dataKey="value"
@@ -426,7 +425,7 @@ const AdminDashboard: React.FC = () => {
           )}
         </div>
       </div>
-    </div>
+    </AppLayout>
   );
 };
 

@@ -8,6 +8,7 @@ import Card, { CardHeader, CardContent } from '../components/ui/Card';
 import Badge from '../components/ui/Badge';
 import StatusTimeline from '../components/ui/StatusTimeline';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+import AppLayout from '../components/layout/AppLayout';
 
 const TrackRepair: React.FC = () => {
   const [trackingCode, setTrackingCode] = useState('');
@@ -33,8 +34,8 @@ const TrackRepair: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <AppLayout>
+      <div className="max-w-2xl mx-auto px-4 py-12">
         <div className="text-center mb-8">
           <Package className="h-16 w-16 text-blue-600 mx-auto mb-4" />
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Track Your Repair</h1>
@@ -123,13 +124,22 @@ const TrackRepair: React.FC = () => {
                 <h2 className="text-xl font-semibold text-gray-900">Status Timeline</h2>
               </CardHeader>
               <CardContent>
-                <StatusTimeline currentStatus={repair.status} timeline={repair.timeline} />
+                <StatusTimeline
+                  currentStatus={repair.status}
+                  timeline={repair.timeline?.map((item) => ({
+                    status: item.status,
+                    description: item.description,
+                    timestamp: item.timestamp,
+                    completed: item.status === repair.status || item.completed,
+                  }))}
+
+                />
               </CardContent>
             </Card>
           </div>
         )}
       </div>
-    </div>
+    </AppLayout>
   );
 };
 

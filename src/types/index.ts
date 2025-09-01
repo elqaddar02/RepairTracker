@@ -36,6 +36,7 @@ export interface RepairTimeline {
   status: string;
   description: string;
   timestamp: string;
+    completed: boolean; 
 }
 
 export interface AuthContextType {

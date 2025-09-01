@@ -9,6 +9,7 @@ import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
 import Card, { CardHeader, CardContent } from '../components/ui/Card';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+import AppLayout from '../components/layout/AppLayout';
 
 const StoreDashboard: React.FC = () => {
   const [activeSection, setActiveSection] = useState('repairs');
@@ -56,18 +57,16 @@ const StoreDashboard: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Navbar />
+      <AppLayout>
         <div className="flex items-center justify-center h-96">
           <LoadingSpinner size="lg" />
         </div>
-      </div>
+      </AppLayout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
+    <AppLayout>
       <div className="flex">
         <div className="w-64 bg-white shadow-sm border-r">
           <div className="p-6">
@@ -225,7 +224,7 @@ const StoreDashboard: React.FC = () => {
           )}
         </div>
       </div>
-    </div>
+    </AppLayout>
   );
 };
 

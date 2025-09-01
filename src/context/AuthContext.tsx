@@ -1,14 +1,11 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { User, AuthContextType, RegisterData } from '../types';
-import { authAPI } from '../api/auth';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (!context) throw new Error('useAuth must be used within AuthProvider');
   return context;
 };
 
@@ -18,67 +15,55 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Load user from localStorage on mount
   useEffect(() => {
-    const savedToken = localStorage.getItem('token');
-    const savedUser = localStorage.getItem('user');
-    
-    if (savedToken && savedUser) {
-      setToken(savedToken);
-      setUser(JSON.parse(savedUser));
-    }
+    const savedUser = localStorage.getItem('currentUser');
+    if (savedUser) setUser(JSON.parse(savedUser));
     setLoading(false);
   }, []);
 
-  const login = async (email: string, password: string) => {
-    try {
-      const response = await authAPI.login(email, password);
-      const { user: userData, token: userToken } = response.data;
-      
-      setUser(userData);
-      setToken(userToken);
-      localStorage.setItem('token', userToken);
-      localStorage.setItem('user', JSON.stringify(userData));
-    } catch (error) {
-      throw error;
-    }
+  // Mock login (no password check)
+  const login = async (email: string, password: string): Promise<void> => {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const foundUser = users.find((u: any) => u.email === email);
+    if (!foundUser) throw new Error('User not found');
+    // Password check can be added here if needed
+
+    setUser(foundUser);
+    localStorage.setItem('currentUser', JSON.stringify(foundUser));
   };
 
-  const register = async (userData: RegisterData) => {
-    try {
-      const response = await authAPI.register(userData);
-      const { user: newUser, token: userToken } = response.data;
-      
-      setUser(newUser);
-      setToken(userToken);
-      localStorage.setItem('token', userToken);
-      localStorage.setItem('user', JSON.stringify(newUser));
-    } catch (error) {
-      throw error;
-    }
+  // Mock register
+  const register = async (userData: RegisterData): Promise<void> => {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    if (users.some((u: any) => u.email === userData.email)) throw new Error('Email already registered');
+
+    const newUser = {
+      ...userData,
+      id: Date.now().toString(),
+      createdAt: new Date().toISOString(),
+    };
+    users.push(newUser);
+    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem('currentUser', JSON.stringify(newUser));
+    setUser(newUser);
   };
 
   const logout = () => {
     setUser(null);
-    setToken(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem('currentUser');
   };
 
   const value: AuthContextType = {
     user,
-    token,
+    token: null, // no token needed
     login,
     register,
     logout,
     loading,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
