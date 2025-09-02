@@ -55,10 +55,6 @@ const translations = {
     myRepairs: "My Repairs",
     repairManagement: "Repair Management",
     userManagement: "User Management"
-    dashboard: "Dashboard",
-    myRepairs: "My Repairs",
-    repairManagement: "Repair Management",
-    userManagement: "User Management"
     // ...add more keys as needed...
   },
   ar: {
