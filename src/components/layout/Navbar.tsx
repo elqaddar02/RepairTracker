@@ -50,24 +50,22 @@ const Navbar: React.FC = () => {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
-                className="flex items-center space-x-2 px-3 py-2 rounded-lg border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <Languages className="h-5 w-5 text-gray-600" />
-                <span className="text-sm font-medium text-gray-700">{currentLanguage?.flag}</span>
-                <ChevronDown className={`h-4 w-4 text-gray-500 transition-transform duration-200 ${isLanguageDropdownOpen ? 'rotate-180' : ''}`} />
+                <Globe className="h-5 w-5 text-gray-600" />
               </button>
 
               {isLanguageDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 animate-in fade-in-0 zoom-in-95">
+                <div className="absolute right-0 mt-2 w-40 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50 animate-in fade-in-0 zoom-in-95">
                   {languages.map((language) => (
                     <button
                       key={language.code}
                       onClick={() => handleLanguageChange(language.code as 'fr' | 'en' | 'ar')}
-                      className={`w-full flex items-center space-x-3 px-4 py-2 text-sm hover:bg-gray-50 transition-colors duration-150 ${
+                      className={`w-full flex items-center space-x-3 px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors duration-150 ${
                         lang === language.code ? 'bg-blue-50 text-blue-700' : 'text-gray-700'
                       }`}
                     >
-                      <span className="text-lg">{language.flag}</span>
+                      <span className="text-base">{language.flag}</span>
                       <span className="font-medium">{language.name}</span>
                       {lang === language.code && (
                         <div className="ml-auto w-2 h-2 bg-blue-600 rounded-full"></div>
