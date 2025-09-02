@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Search, Package, AlertCircle } from 'lucide-react';
-import { repairAPI } from '../api/repairs';
-import { Repair } from '../types';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import Card, { CardHeader, CardContent } from '../components/ui/Card';
@@ -9,6 +7,44 @@ import Badge from '../components/ui/Badge';
 import StatusTimeline from '../components/ui/StatusTimeline';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import AppLayout from '../components/layout/AppLayout';
+import { Repair } from '../types';
+
+const fakeRepairs = [
+  {
+    trackingCode: 'ABC123',
+    deviceType: 'Phone',
+    deviceBrand: 'Apple',
+    deviceModel: 'iPhone 12',
+    issue: 'Screen cracked',
+    storeName: 'Store A',
+    status: 'completed',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    estimatedCost: 199,
+    timeline: [
+      { status: 'waiting', description: 'Submitted', timestamp: new Date().toISOString(), completed: true },
+      { status: 'in_progress', description: 'Repair started', timestamp: new Date().toISOString(), completed: true },
+      { status: 'completed', description: 'Repair completed', timestamp: new Date().toISOString(), completed: true },
+    ],
+  },
+  {
+    trackingCode: 'XYZ789',
+    deviceType: 'Phone',
+    deviceBrand: 'Samsung',
+    deviceModel: 'Galaxy S21',
+    issue: 'Battery issue',
+    storeName: 'Store B',
+    status: 'in_progress',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    estimatedCost: 99,
+    timeline: [
+      { status: 'waiting', description: 'Submitted', timestamp: new Date().toISOString(), completed: true },
+      { status: 'in_progress', description: 'Repair started', timestamp: new Date().toISOString(), completed: false },
+    ],
+  },
+  // ...add more if needed...
+];
 
 const TrackRepair: React.FC = () => {
   const [trackingCode, setTrackingCode] = useState('');
@@ -16,21 +52,24 @@ const TrackRepair: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!trackingCode.trim()) return;
 
     setLoading(true);
     setError('');
-    try {
-      const response = await repairAPI.trackRepair(trackingCode);
-      setRepair(response.data);
-    } catch (err) {
-      setError('Repair not found. Please check your tracking code.');
-      setRepair(null);
-    } finally {
+    // Simulate lookup
+    setTimeout(() => {
+      const found = fakeRepairs.find(r => r.trackingCode === trackingCode.trim());
+      if (found) {
+        setRepair(found as Repair);
+        setError('');
+      } else {
+        setRepair(null);
+        setError('Repair not found. Please check your tracking code.');
+      }
       setLoading(false);
-    }
+    }, 500);
   };
 
   return (

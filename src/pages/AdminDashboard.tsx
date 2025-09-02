@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { repairAPI } from '../api/repairs';
-import { Repair, User, DashboardStats } from '../types';
+import React, { useState } from 'react';
 import { 
   BarChart3, 
   Users, 
@@ -22,12 +20,72 @@ import LoadingSpinner from '../components/ui/LoadingSpinner';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import AppLayout from '../components/layout/AppLayout';
 
+const fakeStats = {
+  totalRepairs: 120,
+  pendingRepairs: 15,
+  completedRepairs: 90,
+  activeStores: 5,
+  activeClients: 20,
+  repairsByStatus: [
+    { name: 'Pending', value: 15, color: '#F59E42' },
+    { name: 'Completed', value: 90, color: '#22C55E' },
+    { name: 'In Progress', value: 15, color: '#3B82F6' },
+  ],
+  repairsByStore: [
+    { name: 'Store A', value: 40 },
+    { name: 'Store B', value: 30 },
+    { name: 'Store C', value: 50 },
+  ],
+};
+
+const fakeRepairs = [
+  {
+    id: '1',
+    trackingCode: 'ABC123',
+    clientName: 'John Doe',
+    storeName: 'Store A',
+    deviceBrand: 'Apple',
+    deviceModel: 'iPhone 12',
+    status: 'completed',
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: '2',
+    trackingCode: 'XYZ789',
+    clientName: 'Jane Smith',
+    storeName: 'Store B',
+    deviceBrand: 'Samsung',
+    deviceModel: 'Galaxy S21',
+    status: 'pending',
+    createdAt: new Date().toISOString(),
+  },
+];
+
+const fakeUsers = [
+  {
+    id: 'u1',
+    name: 'John Doe',
+    email: 'john@example.com',
+    role: 'client',
+    status: 'approved',
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: 'u2',
+    shopName: 'Store A',
+    email: 'storea@example.com',
+    role: 'store',
+    status: 'approved',
+    createdAt: new Date().toISOString(),
+  },
+];
+
 const AdminDashboard: React.FC = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
-  const [stats, setStats] = useState<DashboardStats | null>(null);
-  const [repairs, setRepairs] = useState<Repair[]>([]);
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
+  const stats = fakeStats;
+  const repairs = fakeRepairs;
+  const users = fakeUsers;
+  const [userList, setUserList] = useState(users);
 
   const sidebarItems = [
     { name: 'Dashboard', href: '#dashboard', icon: BarChart3 },
@@ -37,47 +95,11 @@ const AdminDashboard: React.FC = () => {
     { name: 'Settings', href: '#settings', icon: Settings },
   ];
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = async () => {
-    try {
-      const [statsRes, repairsRes, usersRes] = await Promise.all([
-        repairAPI.getDashboardStats(),
-        repairAPI.getAllRepairs(),
-        repairAPI.getAllUsers(),
-      ]);
-      setStats(statsRes.data);
-      setRepairs(repairsRes.data);
-      setUsers(usersRes.data);
-    } catch (error) {
-      console.error('Failed to load admin data:', error);
-    } finally {
-      setLoading(false);
-    }
+  const updateUserStatus = (userId: string, status: string) => {
+    setUserList(userList.map(user =>
+      user.id === userId ? { ...user, status } : user
+    ));
   };
-
-  const updateUserStatus = async (userId: string, status: string) => {
-    try {
-      await repairAPI.updateUserStatus(userId, status);
-      setUsers(users.map(user => 
-        user.id === userId ? { ...user, status: status as any } : user
-      ));
-    } catch (error) {
-      console.error('Failed to update user status:', error);
-    }
-  };
-
-  if (loading) {
-    return (
-      <AppLayout>
-        <div className="flex items-center justify-center h-96">
-          <LoadingSpinner size="lg" />
-        </div>
-      </AppLayout>
-    );
-  }
 
   return (
     <AppLayout>
@@ -252,7 +274,7 @@ const AdminDashboard: React.FC = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {users.map((user) => (
+                      {userList.map((user) => (
                         <TableRow key={user.id}>
                           <TableCell className="font-medium">
                             {user.name || user.shopName || 'N/A'}
@@ -335,7 +357,14 @@ const AdminDashboard: React.FC = () => {
                           <TableCell>{repair.storeName}</TableCell>
                           <TableCell>{repair.deviceBrand} {repair.deviceModel}</TableCell>
                           <TableCell>
-                            <Badge variant={repair.status}>
+                            <Badge variant={
+                              repair.status === 'completed' ? 'completed' :
+                              repair.status === 'pending' ? 'pending' :
+                              repair.status === 'in_progress' ? 'in_progress' :
+                              repair.status === 'cancelled' ? 'cancelled' :
+                              repair.status === 'waiting' ? 'waiting' :
+                              undefined
+                            }>
                               {repair.status.replace('_', ' ').toUpperCase()}
                             </Badge>
                           </TableCell>

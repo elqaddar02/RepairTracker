@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface BadgeProps {
+export  interface BadgeProps {
   children: React.ReactNode;
   variant?: 'waiting' | 'in_progress' | 'completed' | 'cancelled' | 'pending' | 'approved' | 'blocked';
   className?: string;

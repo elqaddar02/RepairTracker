@@ -1,42 +1,88 @@
-import React, { useEffect, useState } from 'react';
-import { repairAPI } from '../api/repairs';
+import React, { useState } from 'react';
 import { Repair } from '../types';
 import Navbar from '../components/layout/Navbar';
 import Table, { TableHeader, TableBody, TableRow, TableHead, TableCell } from '../components/ui/Table';
-import Badge from '../components/ui/Badge';
+import Badge, { BadgeProps } from '../components/ui/Badge';
 import Card, { CardHeader, CardContent } from '../components/ui/Card';
-import LoadingSpinner from '../components/ui/LoadingSpinner';
 import AppLayout from '../components/layout/AppLayout';
 
+const fakeRepairs: Repair[] = [
+  {
+    id: "1",
+    trackingCode: "ABC123",
+    deviceBrand: "Apple",
+    deviceModel: "iPhone 12",
+    deviceType: "Phone",
+    issue: "Screen cracked",
+    storeName: "Store A",
+    storeId: "storeA",
+    clientId: "client1",
+    clientName: "John Doe",
+    status: "completed",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    timeline: [
+      {
+        id: "timeline1-1",
+        status: "waiting",
+        description: "Repair requested",
+        timestamp: new Date().toISOString(),
+        completed: true,
+      },
+      {
+        id: "timeline1-2",
+        status: "in_progress",
+        description: "Repair in progress",
+        timestamp: new Date().toISOString(),
+        completed: true,
+      },
+      {
+        id: "timeline1-3",
+        status: "completed",
+        description: "Repair completed",
+        timestamp: new Date().toISOString(),
+        completed: true,
+      },
+    ],
+  },
+  {
+    id: "2",
+    trackingCode: "XYZ789",
+    deviceBrand: "Samsung",
+    deviceModel: "Galaxy S21",
+    deviceType: "Phone",
+    issue: "Battery issue",
+    storeName: "Store B",
+    storeId: "storeB",
+    clientId: "client2",
+    clientName: "Jane Smith",
+    status: "waiting", // changed from "pending"
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    timeline: [
+      {
+        id: "timeline2-1",
+        status: "waiting",
+        description: "Repair requested",
+        timestamp: new Date().toISOString(),
+        completed: true,
+      },
+      {
+        id: "timeline2-2",
+        status: "waiting", // changed from "pending"
+        description: "Awaiting approval",
+        timestamp: new Date().toISOString(),
+        completed: false,
+      },
+    ],
+  },
+];
+
+
+
 const ClientDashboard: React.FC = () => {
-  const [repairs, setRepairs] = useState<Repair[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [repairs] = useState(fakeRepairs);
   const [selectedRepair, setSelectedRepair] = useState<Repair | null>(null);
-
-  useEffect(() => {
-    loadRepairs();
-  }, []);
-
-  const loadRepairs = async () => {
-    try {
-      const response = await repairAPI.getClientRepairs();
-      setRepairs(response.data);
-    } catch (error) {
-      console.error('Failed to load repairs:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
-    return (
-      <AppLayout>
-        <div className="flex items-center justify-center h-96">
-          <LoadingSpinner size="lg" />
-        </div>
-      </AppLayout>
-    );
-  }
 
   return (
     <AppLayout>
@@ -77,7 +123,11 @@ const ClientDashboard: React.FC = () => {
                       <TableCell>{repair.deviceBrand} {repair.deviceModel}</TableCell>
                       <TableCell>{repair.storeName}</TableCell>
                       <TableCell>
-                        <Badge variant={repair.status}>
+                        <Badge variant={
+                          ['waiting', 'in_progress', 'completed', 'cancelled', 'pending', 'approved', 'blocked'].includes(repair.status)
+                            ? repair.status as BadgeProps ['variant']
+                            : undefined
+                        }>
                           {repair.status.replace('_', ' ').toUpperCase()}
                         </Badge>
                       </TableCell>

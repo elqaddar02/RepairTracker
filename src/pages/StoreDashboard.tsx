@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { repairAPI } from '../api/repairs';
+import React, { useState } from 'react';
 import { Repair, User } from '../types';
 import { Package, Users, Settings, RefreshCw } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
@@ -11,11 +10,50 @@ import Card, { CardHeader, CardContent } from '../components/ui/Card';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import AppLayout from '../components/layout/AppLayout';
 
+const fakeRepairs = [
+  {
+    id: '1',
+    trackingCode: 'ABC123',
+    clientName: 'John Doe',
+    clientId: 'c1',
+    deviceBrand: 'Apple',
+    deviceModel: 'iPhone 12',
+    status: 'waiting',
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: '2',
+    trackingCode: 'XYZ789',
+    clientName: 'Jane Smith',
+    clientId: 'c2',
+    deviceBrand: 'Samsung',
+    deviceModel: 'Galaxy S21',
+    status: 'in_progress',
+    updatedAt: new Date().toISOString(),
+  },
+];
+
+const fakeClients = [
+  {
+    id: 'c1',
+    name: 'John Doe',
+    email: 'john@example.com',
+    phone: '1234567890',
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: 'c2',
+    name: 'Jane Smith',
+    email: 'jane@example.com',
+    phone: '0987654321',
+    createdAt: new Date().toISOString(),
+  },
+];
+
 const StoreDashboard: React.FC = () => {
   const [activeSection, setActiveSection] = useState('repairs');
-  const [repairs, setRepairs] = useState<Repair[]>([]);
-  const [clients, setClients] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [repairs, setRepairs] = useState(fakeRepairs);
+  const [clients] = useState(fakeClients);
 
   const sidebarItems = [
     { name: 'Repairs', href: '#repairs', icon: Package },
@@ -23,47 +61,13 @@ const StoreDashboard: React.FC = () => {
     { name: 'Settings', href: '#settings', icon: Settings },
   ];
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = async () => {
-    try {
-      const [repairsRes, clientsRes] = await Promise.all([
-        repairAPI.getStoreRepairs(),
-        repairAPI.getStoreClients(),
-      ]);
-      setRepairs(repairsRes.data);
-      setClients(clientsRes.data);
-    } catch (error) {
-      console.error('Failed to load data:', error);
-    } finally {
-      setLoading(false);
-    }
+  const updateRepairStatus = (repairId: string, status: string) => {
+    setRepairs(repairs.map(repair =>
+      repair.id === repairId
+        ? { ...repair, status, updatedAt: new Date().toISOString() }
+        : repair
+    ));
   };
-
-  const updateRepairStatus = async (repairId: string, status: string) => {
-    try {
-      await repairAPI.updateRepairStatus(repairId, status);
-      setRepairs(repairs.map(repair => 
-        repair.id === repairId 
-          ? { ...repair, status: status as any, updatedAt: new Date().toISOString() }
-          : repair
-      ));
-    } catch (error) {
-      console.error('Failed to update repair status:', error);
-    }
-  };
-
-  if (loading) {
-    return (
-      <AppLayout>
-        <div className="flex items-center justify-center h-96">
-          <LoadingSpinner size="lg" />
-        </div>
-      </AppLayout>
-    );
-  }
 
   return (
     <AppLayout>
@@ -125,7 +129,7 @@ const StoreDashboard: React.FC = () => {
                           <TableCell>{repair.clientName}</TableCell>
                           <TableCell>{repair.deviceBrand} {repair.deviceModel}</TableCell>
                           <TableCell>
-                            <Badge variant={repair.status}>
+                            <Badge variant={repair.status as 'waiting' | 'in_progress' | 'completed' | 'cancelled' | 'pending' | 'approved' | 'blocked'}>
                               {repair.status.replace('_', ' ').toUpperCase()}
                             </Badge>
                           </TableCell>
