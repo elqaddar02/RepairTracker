@@ -1,10 +1,35 @@
 import React from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Search, Shield, Clock } from 'lucide-react';
 import Button from '../components/ui/Button';
+import Modal from '../components/ui/Modal';
+import RoleSelector from '../components/ui/RoleSelector';
 import { Link } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
 
 const Landing: React.FC = () => {
+  const navigate = useNavigate();
+  const [showRoleSelector, setShowRoleSelector] = useState(false);
+
+  const handleGetStarted = () => {
+    setShowRoleSelector(true);
+  };
+
+  const handleRoleSelect = (role: 'client' | 'store') => {
+    setShowRoleSelector(false);
+    if (role === 'store') {
+      navigate('/auth?tab=register&role=store');
+    } else {
+      navigate('/auth?tab=register&role=client');
+    }
+  };
+
+  const handleFindStores = () => {
+    setShowRoleSelector(false);
+    navigate('/find-stores');
+  };
+
   return (
     <AppLayout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -17,11 +42,9 @@ const Landing: React.FC = () => {
             RepairTracker helps you track and manage device repairs with ease. Get real-time updates, instant notifications, and a secure platform for both customers and stores.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link to="/auth">
-              <Button size="lg" className="w-full sm:w-auto">
-                Get Started
-              </Button>
-            </Link>
+            <Button size="lg" className="w-full sm:w-auto" onClick={handleGetStarted}>
+              Get Started
+            </Button>
             <Link to="/track">
               <Button variant="outline" size="lg" className="w-full sm:w-auto">
                 Track My Repair
@@ -62,6 +85,19 @@ const Landing: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Role Selection Modal */}
+      <Modal 
+        isOpen={showRoleSelector} 
+        onClose={() => setShowRoleSelector(false)}
+        title="Get Started with RepairTracker"
+        size="lg"
+      >
+        <RoleSelector 
+          onSelectRole={handleRoleSelect}
+          onFindStores={handleFindStores}
+        />
+      </Modal>
     </AppLayout>
   );
 };

@@ -38,6 +38,7 @@ function App() {
               <Route path="/" element={<Landing />} />
               <Route path="/track" element={<TrackRepair />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/find-stores" element={<StoreFinder />} />
               
               {/* Dashboard Router */}
               <Route path="/dashboard" element={<DashboardRouter />} />

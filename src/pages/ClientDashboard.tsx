@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { MapPin } from 'lucide-react';
 import { Repair } from '../types';
 import Navbar from '../components/layout/Navbar';
 import Table, { TableHeader, TableBody, TableRow, TableHead, TableCell } from '../components/ui/Table';
@@ -81,6 +83,7 @@ const fakeRepairs: Repair[] = [
 
 
 const ClientDashboard: React.FC = () => {
+  const navigate = useNavigate();
   const [repairs] = useState(fakeRepairs);
   const [selectedRepair, setSelectedRepair] = useState<Repair | null>(null);
 
@@ -89,7 +92,17 @@ const ClientDashboard: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-gray-900">My Repairs</h1>
-          <p className="text-gray-600">Track and manage your device repairs</p>
+          <div className="flex justify-between items-center">
+            <p className="text-gray-600">Track and manage your device repairs</p>
+            <Button 
+              variant="outline" 
+              onClick={() => navigate('/find-stores')}
+              className="flex items-center space-x-2"
+            >
+              <MapPin className="h-4 w-4" />
+              <span>Find Stores</span>
+            </Button>
+          </div>
         </div>
 
         <Card>
