@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LogIn, UserPlus, Languages } from 'lucide-react'; // <-- Add Languages icon
+import { LogIn, UserPlus } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import Card, { CardHeader, CardContent } from '../components/ui/Card';
@@ -8,7 +9,8 @@ import { useI18n } from '../i18n';
 import AppLayout from '../components/layout/AppLayout';
 
 const Auth: React.FC = () => {
-  const { lang, setLang, t } = useI18n();
+  const { t } = useI18n();
+  const { login, register } = useAuth();
 
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
   const [userType, setUserType] = useState<'client' | 'store'>('client');
@@ -33,53 +35,28 @@ const Auth: React.FC = () => {
     address: '',
   });
 
-  // Mock local storage for users
-  const saveUser = (user: any) => {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    users.push(user);
-    localStorage.setItem('users', JSON.stringify(users));
-  };
-
-  const findUser = (email: string, password: string) => {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    return users.find((u: any) => u.email === email && u.password === password);
-  };
-
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
-    setTimeout(() => {
-      // Find user by email (skip password check)
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
-      const user = users.find((u: any) => u.email === loginData.email);
-
-      // If user exists, use their role; otherwise, default to client
-      const role = user?.role || 'client';
-
-      // Save a mock user object with role
-      const currentUser = {
-        email: loginData.email,
-        role,
-      };
-      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    
+    try {
+      await login(loginData.email, loginData.password);
       navigate('/dashboard');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Login failed');
+    } finally {
       setLoading(false);
-    }, 800);
+    }
   };
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
-    setTimeout(() => {
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
-      if (users.some((u: any) => u.email === registerData.email)) {
-        setError(t('emailRegistered'));
-        setLoading(false);
-        return;
-      }
-      const userData = {
+    
+    try {
+      await register({
         email: registerData.email,
         password: registerData.password,
         role: userType,
@@ -87,35 +64,32 @@ const Auth: React.FC = () => {
           ? { name: registerData.name, phone: registerData.phone }
           : { shopName: registerData.shopName, city: registerData.city, address: registerData.address }
         ),
-      };
-      saveUser(userData);
-      localStorage.setItem('currentUser', JSON.stringify(userData));
+      });
       navigate('/dashboard');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Registration failed');
+    } finally {
       setLoading(false);
-    }, 800);
+    }
   };
 
   return (
     <AppLayout>
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
         <div className="w-full max-w-md mx-auto bg-white rounded-xl shadow-lg p-8">
-          {/* Language Selector with Icon */}
-          <div className="flex items-center justify-end mb-4 space-x-2">
-            <Languages className="w-5 h-5 text-blue-600" />
-            <select
-              value={lang}
-              onChange={e => setLang(e.target.value as 'fr' | 'en' | 'ar')}
-              className="border rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-              style={{ minWidth: 90 }}
-            >
-              <option value="ar">{t('arabic')}</option>
-              <option value="fr">{t('french')}</option>
-              <option value="en">{t('english')}</option>
-            </select>
-          </div>
           <div className="text-center mb-6">
             <h2 className="text-3xl font-bold text-gray-900">{t('welcome')}</h2>
             <p className="mt-2 text-gray-600">{t('signInOrCreate')}</p>
+          </div>
+
+          {/* Demo Credentials Info */}
+          <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <h3 className="text-sm font-semibold text-blue-800 mb-2">Demo Credentials:</h3>
+            <div className="text-xs text-blue-700 space-y-1">
+              <p><strong>Client:</strong> client@demo.com / password</p>
+              <p><strong>Store:</strong> store@demo.com / password</p>
+              <p><strong>Admin:</strong> admin@demo.com / password</p>
+            </div>
           </div>
 
           <Card className="shadow-none border-none">

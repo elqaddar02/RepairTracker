@@ -54,19 +54,17 @@ function App() {
               <Route 
                 path="/store/dashboard" 
                 element={
-                          <StoreDashboard />
-                  // <ProtectedRoute requiredRole="store">
-                  //   <StoreDashboard />
-                  // </ProtectedRoute>
+                  <ProtectedRoute requiredRole="store">
+                    <StoreDashboard />
+                  </ProtectedRoute>
                 } 
               />
               <Route 
                 path="/admin/dashboard" 
                 element={
-                  <AdminDashboard />
-                  // <ProtectedRoute requiredRole="admin">
-                  //   <AdminDashboard />
-                  // </ProtectedRoute>
+                  <ProtectedRoute requiredRole="admin">
+                    <AdminDashboard />
+                  </ProtectedRoute>
                 } 
               />
               

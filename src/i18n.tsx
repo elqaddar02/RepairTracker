@@ -50,7 +50,15 @@ const translations = {
     language: "Language",
     arabic: "Arabic",
     french: "French",
-    english: "English"
+    english: "English",
+    dashboard: "Dashboard",
+    myRepairs: "My Repairs",
+    repairManagement: "Repair Management",
+    userManagement: "User Management"
+    dashboard: "Dashboard",
+    myRepairs: "My Repairs",
+    repairManagement: "Repair Management",
+    userManagement: "User Management"
     // ...add more keys as needed...
   },
   ar: {
@@ -76,7 +84,11 @@ const translations = {
     language: "اللغة",
     arabic: "العربية",
     french: "الفرنسية",
-    english: "الإنجليزية"
+    english: "الإنجليزية",
+    dashboard: "لوحة التحكم",
+    myRepairs: "إصلاحاتي",
+    repairManagement: "إدارة الإصلاحات",
+    userManagement: "إدارة المستخدمين"
     // ...add more keys as needed...
   }
 };
