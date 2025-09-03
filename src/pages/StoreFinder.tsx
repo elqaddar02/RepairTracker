@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, ArrowLeft, UserPlus, LogIn } from 'lucide-react';
+import { MapPin, ArrowLeft, UserPlus, LogIn, Phone, Star } from 'lucide-react';
 import { stores, Store } from '../data/stores';
 import StoreMap from '../components/ui/StoreMap';
 import Modal from '../components/ui/Modal';

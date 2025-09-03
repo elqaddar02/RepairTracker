@@ -1,18 +1,15 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Shield, Clock, Languages } from 'lucide-react';
+import { Search, Shield, Clock } from 'lucide-react';
 import Button from '../components/ui/Button';
 import Modal from '../components/ui/Modal';
 import RoleSelector from '../components/ui/RoleSelector';
 import { Link } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
-import { useI18n } from '../i18n';
 
 const Landing: React.FC = () => {
   const navigate = useNavigate();
   const [showRoleSelector, setShowRoleSelector] = useState(false);
-
 
   const handleGetStarted = () => {
     setShowRoleSelector(true);
@@ -54,6 +51,7 @@ const Landing: React.FC = () => {
             </Link>
           </div>
         </div>
+
         {/* Features Section */}
         <div className="grid md:grid-cols-3 gap-8">
           <div className="text-center p-8 bg-white rounded-xl shadow-sm min-h-[240px] flex flex-col justify-between">
@@ -100,8 +98,6 @@ const Landing: React.FC = () => {
           onFindStores={handleFindStores}
         />
       </Modal>
-
-      
     </AppLayout>
   );
 };
