@@ -30,8 +30,8 @@ const DashboardRouter: React.FC = () => {
 
 function App() {
   return (
-    <AuthProvider>
-      <I18nProvider>
+    <I18nProvider>
+      <AuthProvider>
         <Router>
           <div className="App">
             <Routes>
@@ -75,8 +75,8 @@ function App() {
             </Routes>
           </div>
         </Router>
-      </I18nProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </I18nProvider>
   );
 }
 
