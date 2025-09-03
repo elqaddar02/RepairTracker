@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 interface CardProps {
   children: React.ReactNode;
@@ -39,4 +39,4 @@ export const CardContent: React.FC<CardContentProps> = ({ children, className = 
   );
 };
 
-export default Card;
+export default memo(Card);
