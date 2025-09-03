@@ -9,6 +9,7 @@ import ClientDashboard from './pages/ClientDashboard';
 import StoreDashboard from './pages/StoreDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import { I18nProvider } from './i18n';
+import StoreFinder from './pages/StoreFinder';
 
 const DashboardRouter: React.FC = () => {
   const { user } = useAuth();

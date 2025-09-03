@@ -6,7 +6,8 @@ import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import Card, { CardHeader, CardContent } from '../components/ui/Card';
 import { useI18n } from '../i18n';
-import AppLayout from '../components/layout/AppLayout';
+import Header from '../components/layout/Header';
+import Footer from '../components/layout/Footer';
 
 const Auth: React.FC = () => {
   const { t } = useI18n();
@@ -79,310 +80,172 @@ const Auth: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-      <div className="w-full max-w-md mx-auto bg-white rounded-xl shadow-lg p-8">
-        <div className="text-center mb-6">
-          <h2 className="text-3xl font-bold text-gray-900">{t('welcome')}</h2>
-          <p className="mt-2 text-gray-600">{t('signInOrCreate')}</p>
-        </div>
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-100 via-indigo-50 to-blue-200">
+      <Header />
+      <main className="flex-1 flex items-center justify-center my-5">
+        <div className="w-full max-w-md mx-auto">
+          <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-8">
+            <div className="text-center mb-8">
+              <h2 className="text-4xl font-extrabold text-blue-700 mb-2">{t('welcome')}</h2>
+              <p className="text-lg text-gray-500">{t('signInOrCreate')}</p>
+            </div>
 
-        {/* Demo Credentials Info */}
-        <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-          <h3 className="text-sm font-semibold text-blue-800 mb-2">Demo Credentials:</h3>
-          <div className="text-xs text-blue-700 space-y-1">
-            <p><strong>Client:</strong> client@demo.com / password</p>
-            <p><strong>Store:</strong> store@demo.com / password</p>
-            <p><strong>Admin:</strong> admin@demo.com / password</p>
+            {/* Demo Credentials Info */}
+            <div className="mb-8 p-4 bg-gradient-to-r from-blue-100 to-indigo-100 border border-blue-200 rounded-xl shadow">
+              <h3 className="text-sm font-semibold text-blue-800 mb-2">Demo Credentials:</h3>
+              <div className="text-xs text-blue-700 space-y-1">
+                <p><strong>Client:</strong> client@demo.com / password</p>
+                <p><strong>Store:</strong> store@demo.com / password</p>
+                <p><strong>Admin:</strong> admin@demo.com / password</p>
+              </div>
+            </div>
+
+            <Card className="shadow-none border-none">
+              <CardHeader>
+                <div className="flex space-x-2 bg-gray-100 p-2 rounded-xl mb-4">
+                  <button
+                    onClick={() => setActiveTab('login')}
+                    className={`flex-1 py-3 px-4 rounded-lg text-base font-semibold transition-all duration-200 ${
+                      activeTab === 'login'
+                        ? 'bg-blue-600 text-white shadow'
+                        : 'bg-white text-blue-600 hover:bg-blue-50'
+                    }`}
+                  >
+                    <LogIn className="h-5 w-5 inline mr-2" />
+                    {t('login')}
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('register')}
+                    className={`flex-1 py-3 px-4 rounded-lg text-base font-semibold transition-all duration-200 ${
+                      activeTab === 'register'
+                        ? 'bg-blue-600 text-white shadow'
+                        : 'bg-white text-blue-600 hover:bg-blue-50'
+                    }`}
+                  >
+                    <UserPlus className="h-5 w-5 inline mr-2" />
+                    {t('register')}
+                  </button>
+                </div>
+              </CardHeader>
+
+              <CardContent>
+                {error && (
+                  <div className="mb-4 p-3 bg-red-100 border border-red-300 rounded-lg text-red-700 text-sm font-medium">
+                    {error}
+                  </div>
+                )}
+
+                {activeTab === 'login' ? (
+                  <form onSubmit={handleLogin} className="space-y-6">
+                    <Input
+                      label={t('email')}
+                      type="email"
+                      value={loginData.email}
+                      onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
+                      required
+                    />
+                    <Input
+                      label={t('password')}
+                      type="password"
+                      value={loginData.password}
+                      onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+                      required
+                    />
+                    <Button type="submit" disabled={loading} className="w-full py-3 text-base rounded-lg font-semibold">
+                      {loading ? t('signingIn') : t('signIn')}
+                    </Button>
+                  </form>
+                ) : (
+                  <form onSubmit={handleRegister} className="space-y-6">
+                    <div className="flex space-x-2 bg-gray-100 p-2 rounded-xl mb-2">
+                      <button
+                        type="button"
+                        onClick={() => setUserType('client')}
+                        className={`flex-1 py-2 px-4 rounded-lg text-base font-semibold transition-all duration-200 ${
+                          userType === 'client'
+                            ? 'bg-blue-600 text-white shadow'
+                            : 'bg-white text-blue-600 hover:bg-blue-50'
+                        }`}
+                      >
+                        {t('client')}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setUserType('store')}
+                        className={`flex-1 py-2 px-4 rounded-lg text-base font-semibold transition-all duration-200 ${
+                          userType === 'store'
+                            ? 'bg-blue-600 text-white shadow'
+                            : 'bg-white text-blue-600 hover:bg-blue-50'
+                        }`}
+                      >
+                        {t('store')}
+                      </button>
+                    </div>
+
+                    <Input
+                      label={t('email')}
+                      type="email"
+                      value={registerData.email}
+                      onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
+                      required
+                    />
+                    <Input
+                      label={t('password')}
+                      type="password"
+                      value={registerData.password}
+                      onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
+                      required
+                    />
+
+                    {userType === 'client' ? (
+                      <>
+                        <Input
+                          label={t('fullName')}
+                          value={registerData.name}
+                          onChange={(e) => setRegisterData({ ...registerData, name: e.target.value })}
+                          required
+                        />
+                        <Input
+                          label={t('phone')}
+                          value={registerData.phone}
+                          onChange={(e) => setRegisterData({ ...registerData, phone: e.target.value })}
+                          required
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <Input
+                          label={t('shopName')}
+                          value={registerData.shopName}
+                          onChange={(e) => setRegisterData({ ...registerData, shopName: e.target.value })}
+                          required
+                        />
+                        <Input
+                          label={t('city')}
+                          value={registerData.city}
+                          onChange={(e) => setRegisterData({ ...registerData, city: e.target.value })}
+                          required
+                        />
+                        <Input
+                          label={t('address')}
+                          value={registerData.address}
+                          onChange={(e) => setRegisterData({ ...registerData, address: e.target.value })}
+                          required
+                        />
+                      </>
+                    )}
+
+                    <Button type="submit" disabled={loading} className="w-full py-3 text-base rounded-lg font-semibold">
+                      {loading ? t('creatingAccount') : t('createAccount')}
+                    </Button>
+                  </form>
+                )}
+              </CardContent>
+            </Card>
           </div>
         </div>
-
-        <Card className="shadow-none border-none">
-          <CardHeader>
-            <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
-              <button
-                onClick={() => setActiveTab('login')}
-                className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${
-                  activeTab === 'login'
-                    ? 'bg-white text-blue-600 shadow-sm'
-                    : 'text-gray-500 hover:text-gray-700'
-                }`}
-              >
-                <LogIn className="h-4 w-4 inline mr-2" />
-                {t('login')}
-              </button>
-              <button
-                onClick={() => setActiveTab('register')}
-                className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${
-                  activeTab === 'register'
-                    ? 'bg-white text-blue-600 shadow-sm'
-                    : 'text-gray-500 hover:text-gray-700'
-                }`}
-              >
-                <UserPlus className="h-4 w-4 inline mr-2" />
-                {t('register')}
-              </button>
-            </div>
-          </CardHeader>
-
-          <CardContent>
-            {error && (
-              <div className="mb-4 p-3 bg-red-100 border border-red-300 rounded-md text-red-700 text-sm">
-                {error}
-              </div>
-            )}
-
-            {activeTab === 'login' ? (
-              <form onSubmit={handleLogin} className="space-y-4">
-                <Input
-                  label={t('email')}
-                  type="email"
-                  value={loginData.email}
-                  onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
-                  required
-                />
-                <Input
-                  label={t('password')}
-                  type="password"
-                  value={loginData.password}
-                  onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-                  required
-                />
-                <Button type="submit" disabled={loading} className="w-full">
-                  {loading ? t('signingIn') : t('signIn')}
-                </Button>
-              </form>
-            ) : (
-              <form onSubmit={handleRegister} className="space-y-4">
-                <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg mb-4">
-                  <button
-                    type="button"
-                    onClick={() => setUserType('client')}
-                    className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${
-                      userType === 'client'
-                        ? 'bg-white text-blue-600 shadow-sm'
-                        : 'text-gray-500 hover:text-gray-700'
-                    }`}
-                  >
-                    {t('client')}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setUserType('store')}
-                    className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${
-                      userType === 'store'
-                        ? 'bg-white text-blue-600 shadow-sm'
-                        : 'text-gray-500 hover:text-gray-700'
-                    }`}
-                  >
-                    {t('store')}
-                  </button>
-                </div>
-
-                <Input
-                  label={t('email')}
-                  type="email"
-                  value={registerData.email}
-                  onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
-                  required
-                />
-                <Input
-                  label={t('password')}
-                  type="password"
-                  value={registerData.password}
-                  onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
-                  required
-                />
-
-                {userType === 'client' ? (
-                  <>
-                    <Input
-                      label={t('fullName')}
-                      value={registerData.name}
-                      onChange={(e) => setRegisterData({ ...registerData, name: e.target.value })}
-                      required
-                    />
-                    <Input
-                      label={t('phone')}
-                      value={registerData.phone}
-                      onChange={(e) => setRegisterData({ ...registerData, phone: e.target.value })}
-                      required
-                    />
-                  </>
-                ) : (
-                  <>
-                    <Input
-                      label={t('shopName')}
-                      value={registerData.shopName}
-                      onChange={(e) => setRegisterData({ ...registerData, shopName: e.target.value })}
-                      required
-                    />
-                    <Input
-                      label={t('city')}
-                      value={registerData.city}
-                      onChange={(e) => setRegisterData({ ...registerData, city: e.target.value })}
-                      required
-                    />
-                    <Input
-                      label={t('address')}
-                      value={registerData.address}
-                      onChange={(e) => setRegisterData({ ...registerData, address: e.target.value })}
-                      required
-                    />
-                  </>
-                )}
-
-                <Button type="submit" disabled={loading} className="w-full">
-                  {loading ? t('creatingAccount') : t('createAccount')}
-                </Button>
-              </form>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-        <Card className="shadow-none border-none">
-          <CardHeader>
-            <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
-              <button
-                onClick={() => setActiveTab('login')}
-                className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${
-                  activeTab === 'login'
-                    ? 'bg-white text-blue-600 shadow-sm'
-                    : 'text-gray-500 hover:text-gray-700'
-                }`}
-              >
-                <LogIn className="h-4 w-4 inline mr-2" />
-                {t('login')}
-              </button>
-              <button
-                onClick={() => setActiveTab('register')}
-                className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${
-                  activeTab === 'register'
-                    ? 'bg-white text-blue-600 shadow-sm'
-                    : 'text-gray-500 hover:text-gray-700'
-                }`}
-              >
-                <UserPlus className="h-4 w-4 inline mr-2" />
-                {t('register')}
-              </button>
-            </div>
-          </CardHeader>
-
-          <CardContent>
-            {error && (
-              <div className="mb-4 p-3 bg-red-100 border border-red-300 rounded-md text-red-700 text-sm">
-                {error}
-              </div>
-            )}
-
-            {activeTab === 'login' ? (
-              <form onSubmit={handleLogin} className="space-y-4">
-                <Input
-                  label={t('email')}
-                  type="email"
-                  value={loginData.email}
-                  onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
-                  required
-                />
-                <Input
-                  label={t('password')}
-                  type="password"
-                  value={loginData.password}
-                  onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-                  required
-                />
-                <Button type="submit" disabled={loading} className="w-full">
-                  {loading ? t('signingIn') : t('signIn')}
-                </Button>
-              </form>
-            ) : (
-              <form onSubmit={handleRegister} className="space-y-4">
-                <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg mb-4">
-                  <button
-                    type="button"
-                    onClick={() => setUserType('client')}
-                    className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${
-                      userType === 'client'
-                        ? 'bg-white text-blue-600 shadow-sm'
-                        : 'text-gray-500 hover:text-gray-700'
-                    }`}
-                  >
-                    {t('client')}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setUserType('store')}
-                    className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 ${
-                      userType === 'store'
-                        ? 'bg-white text-blue-600 shadow-sm'
-                        : 'text-gray-500 hover:text-gray-700'
-                    }`}
-                  >
-                    {t('store')}
-                  </button>
-                </div>
-
-                <Input
-                  label={t('email')}
-                  type="email"
-                  value={registerData.email}
-                  onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
-                  required
-                />
-                <Input
-                  label={t('password')}
-                  type="password"
-                  value={registerData.password}
-                  onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
-                  required
-                />
-
-                {userType === 'client' ? (
-                  <>
-                    <Input
-                      label={t('fullName')}
-                      value={registerData.name}
-                      onChange={(e) => setRegisterData({ ...registerData, name: e.target.value })}
-                      required
-                    />
-                    <Input
-                      label={t('phone')}
-                      value={registerData.phone}
-                      onChange={(e) => setRegisterData({ ...registerData, phone: e.target.value })}
-                      required
-                    />
-                  </>
-                ) : (
-                  <>
-                    <Input
-                      label={t('shopName')}
-                      value={registerData.shopName}
-                      onChange={(e) => setRegisterData({ ...registerData, shopName: e.target.value })}
-                      required
-                    />
-                    <Input
-                      label={t('city')}
-                      value={registerData.city}
-                      onChange={(e) => setRegisterData({ ...registerData, city: e.target.value })}
-                      required
-                    />
-                    <Input
-                      label={t('address')}
-                      value={registerData.address}
-                      onChange={(e) => setRegisterData({ ...registerData, address: e.target.value })}
-                      required
-                    />
-                  </>
-                )}
-
-                <Button type="submit" disabled={loading} className="w-full">
-                  {loading ? t('creatingAccount') : t('createAccount')}
-                </Button>
-              </form>
-            )}
-          </CardContent>
-        </Card>
-      </div>
+      </main>
+      <Footer />
     </div>
   );
 };

@@ -70,12 +70,15 @@ const StoreMap: React.FC<StoreMapProps> = ({
     return R * c;
   };
 
-  const storesWithDistance = userPos 
+  // Add a local type for stores with distance
+  type StoreWithDistance = Store & { distance: number };
+
+  const storesWithDistance: StoreWithDistance[] = userPos 
     ? stores.map(store => ({
         ...store,
         distance: calculateDistance(userPos.lat, userPos.lng, store.latitude, store.longitude)
       })).sort((a, b) => a.distance - b.distance)
-    : stores;
+    : stores as StoreWithDistance[];
 
   const userIcon = new L.Icon({
     iconUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IiMzQjgyRjYiLz4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iNCIgZmlsbD0id2hpdGUiLz4KPC9zdmc+',
@@ -147,52 +150,53 @@ const StoreMap: React.FC<StoreMapProps> = ({
             className={`cursor-pointer transition-all duration-200 hover:shadow-md ${
               selectedStore?.id === store.id ? 'ring-2 ring-blue-500 border-blue-200' : ''
             }`}
-            onClick={() => onSelectStore?.(store)}
           >
-            <CardContent className="p-4">
-              <div className="flex justify-between items-start mb-2">
-                <h4 className="font-semibold text-gray-900">{store.name}</h4>
-                {userPos && (
-                  <Badge variant="waiting" className="text-xs">
-                    {store.distance.toFixed(1)} km
-                  </Badge>
-                )}
-              </div>
-              
-              <p className="text-sm text-gray-600 mb-2">{store.address}, {store.city}</p>
-              
-              <div className="flex items-center space-x-4 text-xs text-gray-500 mb-3">
-                <div className="flex items-center space-x-1">
-                  <Star className="h-3 w-3 text-yellow-500 fill-current" />
-                  <span>{store.rating}</span>
+            <div onClick={() => onSelectStore?.(store)}>
+              <CardContent className="p-4">
+                <div className="flex justify-between items-start mb-2">
+                  <h4 className="font-semibold text-gray-900">{store.name}</h4>
+                  {userPos && (
+                    <Badge variant="waiting" className="text-xs">
+                      {store.distance?.toFixed(1)} km
+                    </Badge>
+                  )}
                 </div>
-                <div className="flex items-center space-x-1">
-                  <Phone className="h-3 w-3" />
-                  <span>{store.phone}</span>
+                
+                <p className="text-sm text-gray-600 mb-2">{store.address}, {store.city}</p>
+                
+                <div className="flex items-center space-x-4 text-xs text-gray-500 mb-3">
+                  <div className="flex items-center space-x-1">
+                    <Star className="h-3 w-3 text-yellow-500 fill-current" />
+                    <span>{store.rating}</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <Phone className="h-3 w-3" />
+                    <span>{store.phone}</span>
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex items-center space-x-1 text-xs text-gray-500 mb-3">
-                <Clock className="h-3 w-3" />
-                <span>Today: {store.workingHours.monday}</span>
-              </div>
+                <div className="flex items-center space-x-1 text-xs text-gray-500 mb-3">
+                  <Clock className="h-3 w-3" />
+                  <span>Today: {store.workingHours.monday}</span>
+                </div>
 
-              <div className="flex flex-wrap gap-1">
-                {store.services.slice(0, 2).map((service) => (
-                  <span 
-                    key={service}
-                    className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full"
-                  >
-                    {service}
-                  </span>
-                ))}
-                {store.services.length > 2 && (
-                  <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">
-                    +{store.services.length - 2} more
-                  </span>
-                )}
-              </div>
-            </CardContent>
+                <div className="flex flex-wrap gap-1">
+                  {store.services.slice(0, 2).map((service) => (
+                    <span 
+                      key={service}
+                      className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full"
+                    >
+                      {service}
+                    </span>
+                  ))}
+                  {store.services.length > 2 && (
+                    <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">
+                      +{store.services.length - 2} more
+                    </span>
+                  )}
+                </div>
+              </CardContent>
+            </div>
           </Card>
         ))}
       </div>
