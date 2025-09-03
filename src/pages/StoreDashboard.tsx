@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo, useCallback } from 'react';
 import { Repair, User } from '../types';
 import { Package, Users, Settings, RefreshCw } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
@@ -61,13 +61,13 @@ const StoreDashboard: React.FC = () => {
     { name: 'Settings', href: '#settings', icon: Settings },
   ];
 
-  const updateRepairStatus = (repairId: string, status: string) => {
+  const updateRepairStatus = useCallback((repairId: string, status: string) => {
     setRepairs(repairs.map(repair =>
       repair.id === repairId
         ? { ...repair, status, updatedAt: new Date().toISOString() }
         : repair
     ));
-  };
+  }, [repairs]);
 
   return (
     <AppLayout>
@@ -232,4 +232,4 @@ const StoreDashboard: React.FC = () => {
   );
 };
 
-export default StoreDashboard;
+export default memo(StoreDashboard);

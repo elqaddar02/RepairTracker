@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapPin } from 'lucide-react';
 import { Repair } from '../types';
@@ -203,4 +203,4 @@ const ClientDashboard: React.FC = () => {
   );
 };
 
-export default ClientDashboard;
+export default memo(ClientDashboard);
