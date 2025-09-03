@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { Wrench, LogOut, User, Languages, ChevronDown } from 'lucide-react';
+import { Wrench, LogOut, User, Globe } from 'lucide-react';
 import { useI18n } from '../../i18n';
 import Button from '../ui/Button';
 
@@ -112,4 +112,4 @@ const Navbar: React.FC = () => {
   );
 };
 
-export default Navbar;
+export default memo(Navbar);

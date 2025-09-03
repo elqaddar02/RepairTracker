@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, memo } from 'react';
 import { Link } from 'react-router-dom';
-import { Wrench, Languages, ChevronDown, Globe } from 'lucide-react';
+import { Wrench, Globe } from 'lucide-react';
 import { useI18n } from '../../i18n';
 import Button from '../ui/Button';
 
@@ -113,4 +113,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header;
+export default memo(Header);

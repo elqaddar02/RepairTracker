@@ -1,24 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import React, { useEffect, useState, memo, useMemo } from 'react';
 import { Star, Phone, Clock, Navigation } from 'lucide-react';
 import { Store } from '../../data/stores';
 import Card, { CardContent } from './Card';
 import Button from './Button';
 import Badge from './Badge';
-import 'leaflet/dist/leaflet.css';
-
-// Fix for default markers in react-leaflet
-import L from 'leaflet';
-import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
-import markerIcon from 'leaflet/dist/images/marker-icon.png';
-import markerShadow from 'leaflet/dist/images/marker-shadow.png';
-
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconUrl: markerIcon,
-  iconRetinaUrl: markerIcon2x,
-  shadowUrl: markerShadow,
-});
 
 interface StoreMapProps {
   stores: Store[];
@@ -34,27 +19,12 @@ const StoreMap: React.FC<StoreMapProps> = ({
   selectedStore 
 }) => {
   const [mapCenter, setMapCenter] = useState<[number, number]>([40.7128, -74.0060]);
-  const [userPos, setUserPos] = useState<{ lat: number; lng: number } | null>(null);
+  const [userPos, setUserPos] = useState<{ lat: number; lng: number } | null>(userLocation || null);
 
   useEffect(() => {
     if (userLocation) {
       setMapCenter([userLocation.lat, userLocation.lng]);
       setUserPos(userLocation);
-    } else {
-      // Try to get user's location
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const { latitude, longitude } = position.coords;
-            setMapCenter([latitude, longitude]);
-            setUserPos({ lat: latitude, lng: longitude });
-          },
-          () => {
-            // Default to NYC if geolocation fails
-            setMapCenter([40.7128, -74.0060]);
-          }
-        );
-      }
     }
   }, [userLocation]);
 
@@ -73,72 +43,17 @@ const StoreMap: React.FC<StoreMapProps> = ({
   // Add a local type for stores with distance
   type StoreWithDistance = Store & { distance: number };
 
-  const storesWithDistance: StoreWithDistance[] = userPos 
-    ? stores.map(store => ({
-        ...store,
-        distance: calculateDistance(userPos.lat, userPos.lng, store.latitude, store.longitude)
-      })).sort((a, b) => a.distance - b.distance)
-    : stores as StoreWithDistance[];
-
-  const userIcon = new L.Icon({
-    iconUrl: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IiMzQjgyRjYiLz4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iNCIgZmlsbD0id2hpdGUiLz4KPC9zdmc+',
-    iconSize: [24, 24],
-    iconAnchor: [12, 12],
-  });
+  const storesWithDistance: StoreWithDistance[] = useMemo(() => {
+    return userPos 
+      ? stores.map(store => ({
+          ...store,
+          distance: calculateDistance(userPos.lat, userPos.lng, store.latitude, store.longitude)
+        })).sort((a, b) => a.distance - b.distance)
+      : stores as StoreWithDistance[];
+  }, [stores, userPos]);
 
   return (
-    <div className="grid lg:grid-cols-3 gap-6 h-[600px]">
-      <div className="lg:col-span-2">
-        <MapContainer
-          center={mapCenter}
-          zoom={12}
-          className="h-full w-full rounded-lg border border-gray-200"
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          
-          {userPos && (
-            <Marker position={[userPos.lat, userPos.lng]} icon={userIcon}>
-              <Popup>
-                <div className="text-center">
-                  <p className="font-medium">Your Location</p>
-                </div>
-              </Popup>
-            </Marker>
-          )}
-
-          {stores.map((store) => (
-            <Marker
-              key={store.id}
-              position={[store.latitude, store.longitude]}
-              eventHandlers={{
-                click: () => onSelectStore?.(store),
-              }}
-            >
-              <Popup>
-                <div className="min-w-[200px]">
-                  <h3 className="font-semibold text-gray-900 mb-1">{store.name}</h3>
-                  <p className="text-sm text-gray-600 mb-2">{store.address}, {store.city}</p>
-                  <div className="flex items-center space-x-1 mb-2">
-                    <Star className="h-4 w-4 text-yellow-500 fill-current" />
-                    <span className="text-sm font-medium">{store.rating}</span>
-                  </div>
-                  <Button 
-                    size="sm" 
-                    className="w-full"
-                    onClick={() => onSelectStore?.(store)}
-                  >
-                    Select Store
-                  </Button>
-                </div>
-              </Popup>
-            </Marker>
-          ))}
-        </MapContainer>
-      </div>
-
+    <div className="grid lg:grid-cols-2 gap-6 h-[600px]">
       <div className="space-y-4 overflow-y-auto">
         <h3 className="text-lg font-semibold text-gray-900 sticky top-0 bg-white py-2">
           {userPos ? 'Nearby Stores' : 'All Stores'}
@@ -200,8 +115,18 @@ const StoreMap: React.FC<StoreMapProps> = ({
           </Card>
         ))}
       </div>
+
+      <div className="bg-gray-100 rounded-lg flex items-center justify-center">
+        <div className="text-center p-8">
+          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Navigation className="h-8 w-8 text-blue-600" />
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Interactive Map</h3>
+          <p className="text-gray-600">Map functionality temporarily disabled for better performance</p>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default StoreMap;
+export default memo(StoreMap);

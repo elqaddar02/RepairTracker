@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo, useMemo } from 'react';
 import { 
   BarChart3, 
   Users, 
@@ -17,7 +17,6 @@ import Table, { TableHeader, TableBody, TableRow, TableHead, TableCell } from '.
 import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import AppLayout from '../components/layout/AppLayout';
 
 const fakeStats = {
@@ -101,6 +100,8 @@ const AdminDashboard: React.FC = () => {
     ));
   };
 
+  const memoizedStats = useMemo(() => stats, []);
+
   return (
     <AppLayout>
       <div className="flex">
@@ -131,7 +132,7 @@ const AdminDashboard: React.FC = () => {
         </div>
 
         <div className="flex-1 p-8">
-          {activeSection === 'dashboard' && stats && (
+          {activeSection === 'dashboard' && memoizedStats && (
             <div>
               <div className="mb-6">
                 <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
@@ -145,7 +146,7 @@ const AdminDashboard: React.FC = () => {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-sm font-medium text-gray-600">Total Repairs</p>
-                        <p className="text-2xl font-bold text-gray-900">{stats.totalRepairs}</p>
+                        <p className="text-2xl font-bold text-gray-900">{memoizedStats.totalRepairs}</p>
                       </div>
                       <Package className="h-8 w-8 text-blue-600" />
                     </div>
@@ -157,7 +158,7 @@ const AdminDashboard: React.FC = () => {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-sm font-medium text-gray-600">Pending</p>
-                        <p className="text-2xl font-bold text-gray-900">{stats.pendingRepairs}</p>
+                        <p className="text-2xl font-bold text-gray-900">{memoizedStats.pendingRepairs}</p>
                       </div>
                       <TrendingUp className="h-8 w-8 text-orange-600" />
                     </div>
@@ -169,7 +170,7 @@ const AdminDashboard: React.FC = () => {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-sm font-medium text-gray-600">Completed</p>
-                        <p className="text-2xl font-bold text-gray-900">{stats.completedRepairs}</p>
+                        <p className="text-2xl font-bold text-gray-900">{memoizedStats.completedRepairs}</p>
                       </div>
                       <Package className="h-8 w-8 text-green-600" />
                     </div>
@@ -181,7 +182,7 @@ const AdminDashboard: React.FC = () => {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-sm font-medium text-gray-600">Active Stores</p>
-                        <p className="text-2xl font-bold text-gray-900">{stats.activeStores}</p>
+                        <p className="text-2xl font-bold text-gray-900">{memoizedStats.activeStores}</p>
                       </div>
                       <Users className="h-8 w-8 text-purple-600" />
                     </div>
@@ -193,7 +194,7 @@ const AdminDashboard: React.FC = () => {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-sm font-medium text-gray-600">Active Clients</p>
-                        <p className="text-2xl font-bold text-gray-900">{stats.activeClients}</p>
+                        <p className="text-2xl font-bold text-gray-900">{memoizedStats.activeClients}</p>
                       </div>
                       <Users className="h-8 w-8 text-indigo-600" />
                     </div>
@@ -201,32 +202,27 @@ const AdminDashboard: React.FC = () => {
                 </Card>
               </div>
 
-              {/* Charts */}
-              <div className="grid md:grid-cols-2 gap-8">
+              {/* Simplified Charts */}
+              <div className="grid md:grid-cols-2 gap-8 mb-8">
                 <Card>
                   <CardHeader>
                     <h3 className="text-lg font-semibold text-gray-900">Repairs by Status</h3>
                   </CardHeader>
                   <CardContent>
-                    <ResponsiveContainer width="100%" height={300}>
-                      <PieChart>
-                        <Pie
-                          data={stats.repairsByStatus}
-                          cx="50%"
-                          cy="50%"
-                          labelLine={false}
-                          label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
-                          outerRadius={80}
-                          fill="#8884d8"
-                          dataKey="value"
-                        >
-                          {stats.repairsByStatus.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.color} />
-                          ))}
-                        </Pie>
-                        <Tooltip />
-                      </PieChart>
-                    </ResponsiveContainer>
+                    <div className="space-y-3">
+                      {memoizedStats.repairsByStatus.map((item) => (
+                        <div key={item.name} className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2">
+                            <div 
+                              className="w-3 h-3 rounded-full" 
+                              style={{ backgroundColor: item.color }}
+                            />
+                            <span className="text-sm font-medium text-gray-700">{item.name}</span>
+                          </div>
+                          <span className="text-sm font-bold text-gray-900">{item.value}</span>
+                        </div>
+                      ))}
+                    </div>
                   </CardContent>
                 </Card>
 
@@ -235,15 +231,22 @@ const AdminDashboard: React.FC = () => {
                     <h3 className="text-lg font-semibold text-gray-900">Repairs by Store</h3>
                   </CardHeader>
                   <CardContent>
-                    <ResponsiveContainer width="100%" height={300}>
-                      <BarChart data={stats.repairsByStore}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Bar dataKey="value" fill="#3B82F6" />
-                      </BarChart>
-                    </ResponsiveContainer>
+                    <div className="space-y-3">
+                      {memoizedStats.repairsByStore.map((item) => (
+                        <div key={item.name} className="flex items-center justify-between">
+                          <span className="text-sm font-medium text-gray-700">{item.name}</span>
+                          <div className="flex items-center space-x-2">
+                            <div className="w-20 bg-gray-200 rounded-full h-2">
+                              <div 
+                                className="bg-blue-600 h-2 rounded-full" 
+                                style={{ width: `${(item.value / Math.max(...memoizedStats.repairsByStore.map(s => s.value))) * 100}%` }}
+                              />
+                            </div>
+                            <span className="text-sm font-bold text-gray-900 w-8">{item.value}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </CardContent>
                 </Card>
               </div>
@@ -458,4 +461,4 @@ const AdminDashboard: React.FC = () => {
   );
 };
 
-export default AdminDashboard;
+export default memo(AdminDashboard);
