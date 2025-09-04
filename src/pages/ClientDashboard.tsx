@@ -7,6 +7,7 @@ import Table, { TableHeader, TableBody, TableRow, TableHead, TableCell } from '.
 import Badge, { BadgeProps } from '../components/ui/Badge';
 import Card, { CardHeader, CardContent } from '../components/ui/Card';
 import AppLayout from '../components/layout/AppLayout';
+import Button from '../components/ui/Button';
 
 const fakeRepairs: Repair[] = [
   {
@@ -94,7 +95,7 @@ const ClientDashboard: React.FC = () => {
           <h1 className="text-2xl font-bold text-gray-900">My Repairs</h1>
           <div className="flex justify-between items-center">
             <p className="text-gray-600">Track and manage your device repairs</p>
-            <Button 
+            <Button
               variant="outline" 
               onClick={() => navigate('/find-stores')}
               className="flex items-center space-x-2"

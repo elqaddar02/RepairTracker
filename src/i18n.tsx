@@ -24,7 +24,11 @@ const translations = {
     language: "Langue",
     arabic: "Arabe",
     french: "Français",
-    english: "Anglais"
+    english: "Anglais",
+    back: "Retour",
+    findStoreNearMe: "Trouver un magasin près de moi",
+    searchStores: "Rechercher des magasins...",
+    continueLoginRegister: "Continuer vers connexion/inscription",
     // ...add more keys as needed...
   },
   en: {
@@ -54,7 +58,11 @@ const translations = {
     dashboard: "Dashboard",
     myRepairs: "My Repairs",
     repairManagement: "Repair Management",
-    userManagement: "User Management"
+    userManagement: "User Management",
+    back: "Back",
+    findStoreNearMe: "Find store near to me",
+    searchStores: "Search stores...",
+    continueLoginRegister: "Continue to login/register",
     // ...add more keys as needed...
   },
   ar: {
@@ -84,7 +92,11 @@ const translations = {
     dashboard: "لوحة التحكم",
     myRepairs: "إصلاحاتي",
     repairManagement: "إدارة الإصلاحات",
-    userManagement: "إدارة المستخدمين"
+    userManagement: "إدارة المستخدمين",
+    back: "رجوع",
+    findStoreNearMe: "ابحث عن متجر بالقرب مني",
+    searchStores: "ابحث عن المتاجر...",
+    continueLoginRegister: "متابعة إلى تسجيل الدخول/التسجيل",
     // ...add more keys as needed...
   }
 };
