@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Package, AlertCircle } from 'lucide-react';
+import { Search, Package, AlertCircle, PackageIcon } from 'lucide-react';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import Card, { CardHeader, CardContent } from '../components/ui/Card';

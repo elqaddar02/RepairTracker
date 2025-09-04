@@ -9,7 +9,10 @@ import {
   Download,
   UserCheck,
   UserX,
-  Edit
+  Edit,
+  PackageIcon,
+  TrendingUpIcon,
+  UsersIcon
 } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
 import Card, { CardHeader, CardContent } from '../components/ui/Card';
