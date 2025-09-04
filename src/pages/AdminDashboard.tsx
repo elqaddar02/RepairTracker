@@ -118,12 +118,19 @@ const AdminDashboard: React.FC = () => {
                     onClick={() => setActiveSection(item.name.toLowerCase())}
                     className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors duration-200 ${
                       isActive
-                        ? 'bg-blue-100 text-blue-700 border border-blue-200'
+                        ? 'bg-orange-100 text-orange-700 border border-orange-200'
                         : 'text-gray-700 hover:bg-gray-100'
                     }`}
                   >
                     <Icon className="h-5 w-5" />
-                    <span className="font-medium">{item.name}</span>
+                    <span className="font-medium">
+                      {item.name === 'Dashboard' ? 'Tableau de bord' :
+                       item.name === 'Users' ? 'Utilisateurs' :
+                       item.name === 'Repairs' ? 'Réparations' :
+                       item.name === 'Reports' ? 'Rapports' :
+                       item.name === 'Settings' ? 'Paramètres' :
+                       item.name}
+                    </span>
                   </button>
                 );
               })}
@@ -135,8 +142,8 @@ const AdminDashboard: React.FC = () => {
           {activeSection === 'dashboard' && memoizedStats && (
             <div>
               <div className="mb-6">
-                <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
-                <p className="text-gray-600">Overview of platform activity and performance</p>
+                <h1 className="text-2xl font-bold text-gray-900">Tableau de bord administrateur</h1>
+                <p className="text-gray-600">Aperçu de l'activité et des performances de la plateforme</p>
               </div>
 
               {/* KPI Cards */}
@@ -145,10 +152,10 @@ const AdminDashboard: React.FC = () => {
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm font-medium text-gray-600">Total Repairs</p>
+                        <p className="text-sm font-medium text-gray-600">Total réparations</p>
                         <p className="text-2xl font-bold text-gray-900">{memoizedStats.totalRepairs}</p>
                       </div>
-                      <Package className="h-8 w-8 text-blue-600" />
+                      <PackageIcon className="h-8 w-8 text-orange-500" />
                     </div>
                   </CardContent>
                 </Card>
@@ -157,10 +164,10 @@ const AdminDashboard: React.FC = () => {
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm font-medium text-gray-600">Pending</p>
+                        <p className="text-sm font-medium text-gray-600">En attente</p>
                         <p className="text-2xl font-bold text-gray-900">{memoizedStats.pendingRepairs}</p>
                       </div>
-                      <TrendingUp className="h-8 w-8 text-orange-600" />
+                      <TrendingUpIcon className="h-8 w-8 text-orange-500" />
                     </div>
                   </CardContent>
                 </Card>
@@ -169,7 +176,7 @@ const AdminDashboard: React.FC = () => {
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm font-medium text-gray-600">Completed</p>
+                        <p className="text-sm font-medium text-gray-600">Terminées</p>
                         <p className="text-2xl font-bold text-gray-900">{memoizedStats.completedRepairs}</p>
                       </div>
                       <Package className="h-8 w-8 text-green-600" />
@@ -181,10 +188,10 @@ const AdminDashboard: React.FC = () => {
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm font-medium text-gray-600">Active Stores</p>
+                        <p className="text-sm font-medium text-gray-600">Magasins actifs</p>
                         <p className="text-2xl font-bold text-gray-900">{memoizedStats.activeStores}</p>
                       </div>
-                      <Users className="h-8 w-8 text-purple-600" />
+                      <UsersIcon className="h-8 w-8 text-orange-500" />
                     </div>
                   </CardContent>
                 </Card>
@@ -193,10 +200,10 @@ const AdminDashboard: React.FC = () => {
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm font-medium text-gray-600">Active Clients</p>
+                        <p className="text-sm font-medium text-gray-600">Clients actifs</p>
                         <p className="text-2xl font-bold text-gray-900">{memoizedStats.activeClients}</p>
                       </div>
-                      <Users className="h-8 w-8 text-indigo-600" />
+                      <UsersIcon className="h-8 w-8 text-orange-500" />
                     </div>
                   </CardContent>
                 </Card>
@@ -206,7 +213,7 @@ const AdminDashboard: React.FC = () => {
               <div className="grid md:grid-cols-2 gap-8 mb-8">
                 <Card>
                   <CardHeader>
-                    <h3 className="text-lg font-semibold text-gray-900">Repairs by Status</h3>
+                    <h3 className="text-lg font-semibold text-gray-900">Réparations par statut</h3>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
@@ -228,7 +235,7 @@ const AdminDashboard: React.FC = () => {
 
                 <Card>
                   <CardHeader>
-                    <h3 className="text-lg font-semibold text-gray-900">Repairs by Store</h3>
+                    <h3 className="text-lg font-semibold text-gray-900">Réparations par magasin</h3>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
@@ -238,7 +245,7 @@ const AdminDashboard: React.FC = () => {
                           <div className="flex items-center space-x-2">
                             <div className="w-20 bg-gray-200 rounded-full h-2">
                               <div 
-                                className="bg-blue-600 h-2 rounded-full" 
+                                className="bg-orange-500 h-2 rounded-full" 
                                 style={{ width: `${(item.value / Math.max(...memoizedStats.repairsByStore.map(s => s.value))) * 100}%` }}
                               />
                             </div>

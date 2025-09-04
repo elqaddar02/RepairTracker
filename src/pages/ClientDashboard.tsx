@@ -91,38 +91,38 @@ const ClientDashboard: React.FC = () => {
     <AppLayout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">My Repairs</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Mes réparations</h1>
           <div className="flex justify-between items-center">
-            <p className="text-gray-600">Track and manage your device repairs</p>
+            <p className="text-gray-600">Suivez et gérez vos réparations d'appareils</p>
             <Button 
               variant="outline" 
               onClick={() => navigate('/find-stores')}
               className="flex items-center space-x-2"
             >
               <MapPin className="h-4 w-4" />
-              <span>Find Stores</span>
+              <span>Trouver des magasins</span>
             </Button>
           </div>
         </div>
 
         <Card>
           <CardHeader>
-            <h2 className="text-lg font-semibold text-gray-900">Repair History</h2>
+            <h2 className="text-lg font-semibold text-gray-900">Historique des réparations</h2>
           </CardHeader>
           <CardContent className="p-0">
             {repairs.length === 0 ? (
               <div className="p-8 text-center text-gray-500">
-                <p>No repairs found. Submit your first repair to get started.</p>
+                <p>Aucune réparation trouvée. Soumettez votre première réparation pour commencer.</p>
               </div>
             ) : (
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Tracking Code</TableHead>
-                    <TableHead>Device</TableHead>
-                    <TableHead>Store</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Created</TableHead>
+                    <TableHead>Code de suivi</TableHead>
+                    <TableHead>Appareil</TableHead>
+                    <TableHead>Magasin</TableHead>
+                    <TableHead>Statut</TableHead>
+                    <TableHead>Créé</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>

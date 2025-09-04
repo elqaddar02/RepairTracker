@@ -116,3 +116,87 @@ export const I18nProvider: React.FC<{children: React.ReactNode}> = ({ children }
 };
 
 export const useI18n = () => useContext(I18nContext);
+
+// Add more French translations
+const frenchTranslations = {
+  // Navigation & Layout
+  dashboard: "Tableau de bord",
+  repairs: "Réparations",
+  logout: "Déconnexion",
+  settings: "Paramètres",
+  users: "Utilisateurs",
+  reports: "Rapports",
+  
+  // Table & Data
+  trackingCode: "Code de suivi",
+  deviceBrand: "Marque de l'appareil",
+  deviceModel: "Modèle de l'appareil",
+  status: "Statut",
+  created: "Créé",
+  lastUpdate: "Dernière mise à jour",
+  actions: "Actions",
+  
+  // Statuses
+  waiting: "En attente",
+  inProgress: "En cours",
+  completed: "Terminé",
+  cancelled: "Annulé",
+  pending: "En attente",
+  approved: "Approuvé",
+  blocked: "Bloqué",
+  
+  // Common UI
+  name: "Nom",
+  device: "Appareil",
+  store: "Magasin",
+  client: "Client",
+  role: "Rôle",
+  joined: "Inscrit",
+  
+  // Landing page
+  trackYourDevice: "Suivez facilement la réparation de votre appareil",
+  landingSubtitle: "RepairTracker vous aide à suivre et gérer les réparations d'appareils en toute simplicité. Obtenez des mises à jour en temps réel, des notifications instantanées et une plateforme sécurisée pour les clients et les magasins.",
+  getStarted: "Commencer",
+  trackMyRepair: "Suivre ma réparation",
+  easyTracking: "Suivi facile",
+  easyTrackingDesc: "Suivez l'état de votre réparation avec un simple code de suivi. Obtenez des mises à jour en temps réel sur votre appareil.",
+  securePlatform: "Plateforme sécurisée",
+  securePlatformDesc: "Vos données sont protégées par des mesures de sécurité et un chiffrement de niveau industriel.",
+  realTimeUpdates: "Mises à jour en temps réel",
+  realTimeUpdatesDesc: "Recevez des notifications instantanées lorsque l'état de votre réparation change ou est terminé.",
+  
+  // Store finder
+  findRepairStores: "Trouver des magasins de réparation",
+  findStoresDesc: "Découvrez des magasins de réparation de confiance près de chez vous. Parcourez les emplacements, comparez les services et choisissez le magasin parfait pour vos besoins de réparation d'appareils.",
+  backToHome: "Retour à l'accueil",
+  
+  // Track repair
+  trackRepairTitle: "Suivre votre réparation",
+  trackRepairDesc: "Entrez votre code de suivi pour voir l'état actuel de votre réparation",
+  checkStatus: "Vérifier le statut",
+  repairNotFound: "Réparation non trouvée. Veuillez vérifier votre code de suivi.",
+  repairDetails: "Détails de la réparation",
+  deviceInformation: "Informations sur l'appareil",
+  repairInformation: "Informations sur la réparation",
+  statusTimeline: "Chronologie du statut",
+  
+  // Common
+  type: "Type",
+  brand: "Marque",
+  model: "Modèle",
+  issue: "Problème",
+  submitted: "Soumis",
+  estimatedCost: "Coût estimé",
+  address: "Adresse",
+  phone: "Téléphone",
+  rating: "Note",
+  servicesOffered: "Services offerts",
+  workingHours: "Heures d'ouverture",
+  chooseThisStore: "Choisir ce magasin",
+  keepLooking: "Continuer à chercher",
+  continueAsClient: "Continuer en tant que client",
+  iHaveAccount: "J'ai un compte",
+  signInExisting: "Connectez-vous à votre compte existant",
+  createNewAccount: "Créer un nouveau compte",
+  registerAsNew: "S'inscrire en tant que nouveau client"
+};

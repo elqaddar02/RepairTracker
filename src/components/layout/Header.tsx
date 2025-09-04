@@ -64,7 +64,7 @@ const Header: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link to="/" className="flex items-center space-x-2">
-              <Wrench className="h-8 w-8 text-blue-600" />
+              <WrenchIcon className="h-8 w-8 text-orange-500" />
               <span className="text-xl font-bold text-gray-900">RepairTracker</span>
             </Link>
 
@@ -73,7 +73,7 @@ const Header: React.FC = () => {
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
-                  className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500"
                 >
                   <Globe className="h-5 w-5 text-gray-600" />
                 </button>
@@ -85,13 +85,13 @@ const Header: React.FC = () => {
                         key={language.code}
                         onClick={() => handleLanguageChange(language.code as 'fr' | 'en' | 'ar')}
                         className={`w-full flex items-center space-x-3 px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors duration-150 ${
-                          lang === language.code ? 'bg-blue-50 text-blue-700' : 'text-gray-700'
+                          lang === language.code ? 'bg-orange-50 text-orange-700' : 'text-gray-700'
                         }`}
                       >
                         <span className="text-base">{language.flag}</span>
                         <span className="font-medium">{language.name}</span>
                         {lang === language.code && (
-                          <div className="ml-auto w-2 h-2 bg-blue-600 rounded-full"></div>
+                          <div className="ml-auto w-2 h-2 bg-orange-600 rounded-full"></div>
                         )}
                       </button>
                     ))}
@@ -100,10 +100,10 @@ const Header: React.FC = () => {
               </div>
 
               <Link to="/track">
-                <Button variant="outline" size="sm">Track Repair</Button>
+                <Button variant="outline" size="sm">Suivre réparation</Button>
               </Link>
               <Link to="/auth">
-                <Button size="sm">Sign In</Button>
+                <Button size="sm">Se connecter</Button>
               </Link>
             </div>
           </div>
