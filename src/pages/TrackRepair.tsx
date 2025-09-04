@@ -76,17 +76,17 @@ const TrackRepair: React.FC = () => {
     <AppLayout>
       <div className="max-w-2xl mx-auto px-4 py-12">
         <div className="text-center mb-8">
-          <Package className="h-16 w-16 text-blue-600 mx-auto mb-4" />
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Track Your Repair</h1>
-          <p className="text-gray-600">Enter your tracking code to see the current status of your repair</p>
+          <PackageIcon className="h-16 w-16 text-orange-500 mx-auto mb-4" />
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Suivre votre réparation</h1>
+          <p className="text-gray-600">Entrez votre code de suivi pour voir l'état actuel de votre réparation</p>
         </div>
 
         <Card className="mb-8">
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <Input
-                label="Tracking Code"
-                placeholder="Enter your repair tracking code"
+                label="Code de suivi"
+                placeholder="Entrez votre code de suivi de réparation"
                 value={trackingCode}
                 onChange={(e) => setTrackingCode(e.target.value)}
                 required
@@ -101,7 +101,7 @@ const TrackRepair: React.FC = () => {
                 ) : (
                   <>
                     <Search className="h-4 w-4" />
-                    <span>Check Status</span>
+                    <span>Vérifier le statut</span>
                   </>
                 )}
               </Button>
@@ -126,8 +126,8 @@ const TrackRepair: React.FC = () => {
               <CardHeader>
                 <div className="flex justify-between items-start">
                   <div>
-                    <h2 className="text-xl font-semibold text-gray-900">Repair Details</h2>
-                    <p className="text-sm text-gray-500">Tracking Code: {repair.trackingCode}</p>
+                    <h2 className="text-xl font-semibold text-gray-900">Détails de la réparation</h2>
+                    <p className="text-sm text-gray-500">Code de suivi: {repair.trackingCode}</p>
                   </div>
                   <Badge variant={repair.status}>{repair.status.replace('_', ' ').toUpperCase()}</Badge>
                 </div>
@@ -135,22 +135,22 @@ const TrackRepair: React.FC = () => {
               <CardContent>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <h3 className="font-medium text-gray-900 mb-3">Device Information</h3>
+                    <h3 className="font-medium text-gray-900 mb-3">Informations sur l'appareil</h3>
                     <div className="space-y-2 text-sm">
                       <p><span className="font-medium">Type:</span> {repair.deviceType}</p>
-                      <p><span className="font-medium">Brand:</span> {repair.deviceBrand}</p>
-                      <p><span className="font-medium">Model:</span> {repair.deviceModel}</p>
-                      <p><span className="font-medium">Issue:</span> {repair.issue}</p>
+                      <p><span className="font-medium">Marque:</span> {repair.deviceBrand}</p>
+                      <p><span className="font-medium">Modèle:</span> {repair.deviceModel}</p>
+                      <p><span className="font-medium">Problème:</span> {repair.issue}</p>
                     </div>
                   </div>
                   <div>
-                    <h3 className="font-medium text-gray-900 mb-3">Repair Information</h3>
+                    <h3 className="font-medium text-gray-900 mb-3">Informations sur la réparation</h3>
                     <div className="space-y-2 text-sm">
-                      <p><span className="font-medium">Store:</span> {repair.storeName}</p>
-                      <p><span className="font-medium">Submitted:</span> {new Date(repair.createdAt).toLocaleDateString()}</p>
-                      <p><span className="font-medium">Last Update:</span> {new Date(repair.updatedAt).toLocaleDateString()}</p>
+                      <p><span className="font-medium">Magasin:</span> {repair.storeName}</p>
+                      <p><span className="font-medium">Soumis:</span> {new Date(repair.createdAt).toLocaleDateString()}</p>
+                      <p><span className="font-medium">Dernière mise à jour:</span> {new Date(repair.updatedAt).toLocaleDateString()}</p>
                       {repair.estimatedCost && (
-                        <p><span className="font-medium">Estimated Cost:</span> ${repair.estimatedCost}</p>
+                        <p><span className="font-medium">Coût estimé:</span> {repair.estimatedCost}€</p>
                       )}
                     </div>
                   </div>
@@ -160,7 +160,7 @@ const TrackRepair: React.FC = () => {
 
             <Card>
               <CardHeader>
-                <h2 className="text-xl font-semibold text-gray-900">Status Timeline</h2>
+                <h2 className="text-xl font-semibold text-gray-900">Chronologie du statut</h2>
               </CardHeader>
               <CardContent>
                 <StatusTimeline

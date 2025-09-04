@@ -50,11 +50,11 @@ const StoreFinder: React.FC = () => {
           
           <div className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-4">
-              <MapPin className="h-8 w-8 text-blue-600" />
-              <h1 className="text-3xl font-bold text-gray-900">Find Repair Stores</h1>
+              <MapPinIcon className="h-8 w-8 text-orange-500" />
+              <h1 className="text-3xl font-bold text-gray-900">Trouver des magasins de réparation</h1>
             </div>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Discover trusted repair stores near you. Browse locations, compare services, and choose the perfect store for your device repair needs.
+              Découvrez des magasins de réparation de confiance près de chez vous. Parcourez les emplacements, comparez les services et choisissez le magasin parfait pour vos besoins de réparation d'appareils.
             </p>
           </div>
         </div>
@@ -69,7 +69,7 @@ const StoreFinder: React.FC = () => {
         <Modal 
           isOpen={showStoreDetails} 
           onClose={() => setShowStoreDetails(false)}
-          title="Store Details"
+          title="Détails du magasin"
           size="lg"
         >
           {selectedStore && (
@@ -82,7 +82,7 @@ const StoreFinder: React.FC = () => {
                     <div className="flex items-start space-x-2">
                       <MapPin className="h-4 w-4 text-gray-500 mt-0.5" />
                       <div>
-                        <p className="font-medium text-gray-900">Address</p>
+                        <p className="font-medium text-gray-900">Adresse</p>
                         <p className="text-gray-600">{selectedStore.address}, {selectedStore.city}</p>
                       </div>
                     </div>
@@ -90,7 +90,7 @@ const StoreFinder: React.FC = () => {
                     <div className="flex items-center space-x-2">
                       <Phone className="h-4 w-4 text-gray-500" />
                       <div>
-                        <p className="font-medium text-gray-900">Phone</p>
+                        <p className="font-medium text-gray-900">Téléphone</p>
                         <p className="text-gray-600">{selectedStore.phone}</p>
                       </div>
                     </div>
@@ -99,14 +99,14 @@ const StoreFinder: React.FC = () => {
                       <div className="flex items-center space-x-1">
                         <Star className="h-4 w-4 text-yellow-500 fill-current" />
                         <span className="font-medium text-gray-900">{selectedStore.rating}</span>
-                        <span className="text-gray-600">rating</span>
+                        <span className="text-gray-600">note</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-3">Services Offered</h4>
+                  <h4 className="font-semibold text-gray-900 mb-3">Services offerts</h4>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {selectedStore.services.map((service) => (
                       <Badge key={service} variant="completed" className="text-xs">
@@ -115,7 +115,7 @@ const StoreFinder: React.FC = () => {
                     ))}
                   </div>
 
-                  <h4 className="font-semibold text-gray-900 mb-3">Working Hours</h4>
+                  <h4 className="font-semibold text-gray-900 mb-3">Heures d'ouverture</h4>
                   <div className="space-y-1 text-sm">
                     {Object.entries(selectedStore.workingHours).map(([day, hours]) => (
                       <div key={day} className="flex justify-between">
@@ -132,14 +132,14 @@ const StoreFinder: React.FC = () => {
                   onClick={handleChooseStore}
                   className="flex-1"
                 >
-                  Choose This Store
+                  Choisir ce magasin
                 </Button>
                 <Button 
                   variant="outline"
                   onClick={() => setShowStoreDetails(false)}
                   className="flex-1"
                 >
-                  Keep Looking
+                  Continuer à chercher
                 </Button>
               </div>
             </div>
@@ -150,23 +150,23 @@ const StoreFinder: React.FC = () => {
         <Modal 
           isOpen={showClientOptions} 
           onClose={() => setShowClientOptions(false)}
-          title="Continue as Client"
+          title="Continuer en tant que client"
         >
           <div className="space-y-6">
             <div className="text-center">
               <p className="text-gray-600">
-                You've selected <strong>{selectedStore?.name}</strong>. How would you like to continue?
+                Vous avez sélectionné <strong>{selectedStore?.name}</strong>. Comment souhaitez-vous continuer?
               </p>
             </div>
 
             <div className="grid gap-4">
               <Card className="hover:shadow-md transition-shadow duration-200 cursor-pointer group" onClick={() => handleClientChoice('login')}>
                 <CardContent className="p-6 text-center">
-                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-blue-200 transition-colors duration-300">
-                    <LogIn className="h-6 w-6 text-blue-600" />
+                  <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-orange-200 transition-colors duration-300">
+                    <LogInIcon className="h-6 w-6 text-orange-600" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">I have an account</h3>
-                  <p className="text-gray-600 text-sm">Sign in to your existing account</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">J'ai un compte</h3>
+                  <p className="text-gray-600 text-sm">Connectez-vous à votre compte existant</p>
                 </CardContent>
               </Card>
 
@@ -175,8 +175,8 @@ const StoreFinder: React.FC = () => {
                   <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-green-200 transition-colors duration-300">
                     <UserPlus className="h-6 w-6 text-green-600" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Create new account</h3>
-                  <p className="text-gray-600 text-sm">Register as a new client</p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Créer un nouveau compte</h3>
+                  <p className="text-gray-600 text-sm">S'inscrire en tant que nouveau client</p>
                 </CardContent>
               </Card>
             </div>

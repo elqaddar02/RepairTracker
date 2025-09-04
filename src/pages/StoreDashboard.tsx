@@ -85,12 +85,17 @@ const StoreDashboard: React.FC = () => {
                     onClick={() => setActiveSection(item.name.toLowerCase())}
                     className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors duration-200 ${
                       isActive
-                        ? 'bg-blue-100 text-blue-700 border border-blue-200'
+                        ? 'bg-orange-100 text-orange-700 border border-orange-200'
                         : 'text-gray-700 hover:bg-gray-100'
                     }`}
                   >
                     <Icon className="h-5 w-5" />
-                    <span className="font-medium">{item.name}</span>
+                    <span className="font-medium">
+                      {item.name === 'Repairs' ? 'Réparations' :
+                       item.name === 'Clients' ? 'Clients' :
+                       item.name === 'Settings' ? 'Paramètres' :
+                       item.name}
+                    </span>
                   </button>
                 );
               })}
@@ -102,13 +107,13 @@ const StoreDashboard: React.FC = () => {
           {activeSection === 'repairs' && (
             <div>
               <div className="mb-6">
-                <h1 className="text-2xl font-bold text-gray-900">Repair Management</h1>
-                <p className="text-gray-600">Manage and update repair statuses</p>
+                <h1 className="text-2xl font-bold text-gray-900">Gestion des réparations</h1>
+                <p className="text-gray-600">Gérer et mettre à jour les statuts de réparation</p>
               </div>
 
               <Card>
                 <CardHeader>
-                  <h2 className="text-lg font-semibold text-gray-900">Active Repairs</h2>
+                  <h2 className="text-lg font-semibold text-gray-900">Réparations actives</h2>
                 </CardHeader>
                 <CardContent className="p-0">
                   <Table>
@@ -116,9 +121,9 @@ const StoreDashboard: React.FC = () => {
                       <TableRow>
                         <TableHead>ID</TableHead>
                         <TableHead>Client</TableHead>
-                        <TableHead>Device</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Last Update</TableHead>
+                        <TableHead>Appareil</TableHead>
+                        <TableHead>Statut</TableHead>
+                        <TableHead>Dernière mise à jour</TableHead>
                         <TableHead>Actions</TableHead>
                       </TableRow>
                     </TableHeader>

@@ -56,7 +56,7 @@ const StoreMap: React.FC<StoreMapProps> = ({
     <div className="grid lg:grid-cols-2 gap-6 h-[600px]">
       <div className="space-y-4 overflow-y-auto">
         <h3 className="text-lg font-semibold text-gray-900 sticky top-0 bg-white py-2">
-          {userPos ? 'Nearby Stores' : 'All Stores'}
+          {userPos ? 'Magasins à proximité' : 'Tous les magasins'}
         </h3>
         
         {storesWithDistance.map((store) => (
@@ -92,7 +92,7 @@ const StoreMap: React.FC<StoreMapProps> = ({
 
                 <div className="flex items-center space-x-1 text-xs text-gray-500 mb-3">
                   <Clock className="h-3 w-3" />
-                  <span>Today: {store.workingHours.monday}</span>
+                  <span>Aujourd'hui: {store.workingHours.monday}</span>
                 </div>
 
                 <div className="flex flex-wrap gap-1">
@@ -106,7 +106,7 @@ const StoreMap: React.FC<StoreMapProps> = ({
                   ))}
                   {store.services.length > 2 && (
                     <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">
-                      +{store.services.length - 2} more
+                      +{store.services.length - 2} autres
                     </span>
                   )}
                 </div>
@@ -118,11 +118,11 @@ const StoreMap: React.FC<StoreMapProps> = ({
 
       <div className="bg-gray-100 rounded-lg flex items-center justify-center">
         <div className="text-center p-8">
-          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Navigation className="h-8 w-8 text-blue-600" />
+          <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Navigation className="h-8 w-8 text-orange-600" />
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Interactive Map</h3>
-          <p className="text-gray-600">Map functionality temporarily disabled for better performance</p>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Carte interactive</h3>
+          <p className="text-gray-600">Fonctionnalité de carte temporairement désactivée pour de meilleures performances</p>
         </div>
       </div>
     </div>

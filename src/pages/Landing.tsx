@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Shield, Clock } from 'lucide-react';
+// Update the import path if the file exists elsewhere, for example:
+
+// Or, if the file does not exist, create '../components/icons/Icons.tsx' and export the icons from there.
 import Button from '../components/ui/Button';
 import Modal from '../components/ui/Modal';
 import RoleSelector from '../components/ui/RoleSelector';
 import { Link } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
+import { ClockIcon, SearchIcon, ShieldIcon } from 'lucide-react';
 
 const Landing: React.FC = () => {
   const navigate = useNavigate();
@@ -35,18 +38,18 @@ const Landing: React.FC = () => {
         {/* Hero Section */}
         <div className="text-center mb-20">
           <h1 className="text-5xl font-bold text-gray-900 mb-6">
-            Track your device repair easily
+            Suivez facilement la réparation de votre appareil
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            RepairTracker helps you track and manage device repairs with ease. Get real-time updates, instant notifications, and a secure platform for both customers and stores.
+            RepairTracker vous aide à suivre et gérer les réparations d'appareils en toute simplicité. Obtenez des mises à jour en temps réel, des notifications instantanées et une plateforme sécurisée pour les clients et les magasins.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button size="lg" className="w-full sm:w-auto" onClick={handleGetStarted}>
-              Get Started
+              Commencer
             </Button>
             <Link to="/track">
               <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                Track My Repair
+                Suivre ma réparation
               </Button>
             </Link>
           </div>
@@ -56,31 +59,31 @@ const Landing: React.FC = () => {
         <div className="grid md:grid-cols-3 gap-8">
           <div className="text-center p-8 bg-white rounded-xl shadow-sm min-h-[240px] flex flex-col justify-between">
             <div>
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <Search className="h-6 w-6 text-blue-600" />
+              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                <SearchIcon className="h-6 w-6 text-orange-600" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Easy Tracking</h3>
-              <p className="text-gray-600">Track your repair status with a simple tracking code. Get real-time updates on your device.</p>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Suivi facile</h3>
+              <p className="text-gray-600">Suivez l'état de votre réparation avec un simple code de suivi. Obtenez des mises à jour en temps réel sur votre appareil.</p>
             </div>
           </div>
           
           <div className="text-center p-8 bg-white rounded-xl shadow-sm min-h-[240px] flex flex-col justify-between">
             <div>
               <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <Shield className="h-6 w-6 text-green-600" />
+                <ShieldIcon className="h-6 w-6 text-green-600" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Secure Platform</h3>
-              <p className="text-gray-600">Your data is protected with industry-standard security measures and encryption.</p>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Plateforme sécurisée</h3>
+              <p className="text-gray-600">Vos données sont protégées par des mesures de sécurité et un chiffrement de niveau industriel.</p>
             </div>
           </div>
           
           <div className="text-center p-8 bg-white rounded-xl shadow-sm min-h-[240px] flex flex-col justify-between">
             <div>
               <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <Clock className="h-6 w-6 text-purple-600" />
+                <ClockIcon className="h-6 w-6 text-purple-600" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Real-time Updates</h3>
-              <p className="text-gray-600">Get instant notifications when your repair status changes or is completed.</p>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Mises à jour en temps réel</h3>
+              <p className="text-gray-600">Recevez des notifications instantanées lorsque l'état de votre réparation change ou est terminé.</p>
             </div>
           </div>
         </div>
@@ -90,7 +93,7 @@ const Landing: React.FC = () => {
       <Modal 
         isOpen={showRoleSelector} 
         onClose={() => setShowRoleSelector(false)}
-        title="Get Started with RepairTracker"
+        title="Commencer avec RepairTracker"
         size="lg"
       >
         <RoleSelector 
