@@ -20,7 +20,7 @@ const RoleSelector: React.FC<RoleSelectorProps> = ({ onSelectRole, onFindStores 
         <Card className="hover:shadow-lg transition-shadow duration-300 cursor-pointer group" onClick={() => onSelectRole('client')}>
           <CardContent className="p-8 text-center">
             <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-200 transition-colors duration-300">
-              <UserIcon className="h-8 w-8 text-orange-600" />
+              <User className="h-8 w-8 text-orange-600" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">Je suis un client</h3>
             <p className="text-gray-600 mb-4">J'ai besoin de réparer mon appareil et je veux suivre le processus de réparation</p>
@@ -31,7 +31,7 @@ const RoleSelector: React.FC<RoleSelectorProps> = ({ onSelectRole, onFindStores 
         <Card className="hover:shadow-lg transition-shadow duration-300 cursor-pointer group" onClick={() => onSelectRole('store')}>
           <CardContent className="p-8 text-center">
             <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-200 transition-colors duration-300">
-              <StoreIcon className="h-8 w-8 text-orange-600" />
+              <Store className="h-8 w-8 text-orange-600" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">Je suis propriétaire de magasin</h3>
             <p className="text-gray-600 mb-4">Je veux gérer les réparations et servir les clients via mon magasin</p>
@@ -54,7 +54,7 @@ const RoleSelector: React.FC<RoleSelectorProps> = ({ onSelectRole, onFindStores 
       <Card className="hover:shadow-lg transition-shadow duration-300 cursor-pointer group" onClick={onFindStores}>
         <CardContent className="p-6 text-center">
           <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-orange-200 transition-colors duration-300">
-            <MapPinIcon className="h-6 w-6 text-orange-600" />
+            <MapPin className="h-6 w-6 text-orange-600" />
           </div>
           <h3 className="text-lg font-semibold text-gray-900 mb-2">Trouver des magasins près de moi</h3>
           <p className="text-gray-600 text-sm">Découvrez les magasins de réparation dans votre région avant de créer un compte</p>

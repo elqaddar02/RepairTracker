@@ -50,7 +50,7 @@ const StoreFinder: React.FC = () => {
           
           <div className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-4">
-              <MapPinIcon className="h-8 w-8 text-orange-500" />
+              <MapPin className="h-8 w-8 text-orange-500" />
               <h1 className="text-3xl font-bold text-gray-900">Trouver des magasins de réparation</h1>
             </div>
             <p className="text-gray-600 max-w-2xl mx-auto">
@@ -163,7 +163,7 @@ const StoreFinder: React.FC = () => {
               <Card className="hover:shadow-md transition-shadow duration-200 cursor-pointer group" onClick={() => handleClientChoice('login')}>
                 <CardContent className="p-6 text-center">
                   <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-orange-200 transition-colors duration-300">
-                    <LogInIcon className="h-6 w-6 text-orange-600" />
+                    <LogIn className="h-6 w-6 text-orange-600" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">J'ai un compte</h3>
                   <p className="text-gray-600 text-sm">Connectez-vous à votre compte existant</p>

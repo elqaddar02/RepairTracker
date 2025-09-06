@@ -119,7 +119,7 @@ const StoreMap: React.FC<StoreMapProps> = ({
       <div className="bg-gray-100 rounded-lg flex items-center justify-center">
         <div className="text-center p-8">
           <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <NavigationIcon className="h-8 w-8 text-orange-600" />
+            <Navigation className="h-8 w-8 text-orange-600" />
           </div>
           <h3 className="text-lg font-semibold text-gray-900 mb-2">Carte interactive</h3>
           <p className="text-gray-600">Fonctionnalité de carte temporairement désactivée pour de meilleures performances</p>

@@ -76,7 +76,7 @@ const TrackRepair: React.FC = () => {
     <AppLayout>
       <div className="max-w-2xl mx-auto px-4 py-12">
         <div className="text-center mb-8">
-          <PackageIcon className="h-16 w-16 text-orange-500 mx-auto mb-4" />
+          <Package className="h-16 w-16 text-orange-500 mx-auto mb-4" />
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Suivre votre réparation</h1>
           <p className="text-gray-600">Entrez votre code de suivi pour voir l'état actuel de votre réparation</p>
         </div>
