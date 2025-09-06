@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// Update the import path if the file exists elsewhere, for example:
-
-// Or, if the file does not exist, create '../components/icons/Icons.tsx' and export the icons from there.
+import { Search, Shield, Clock } from 'lucide-react';
 import Button from '../components/ui/Button';
 import Modal from '../components/ui/Modal';
 import RoleSelector from '../components/ui/RoleSelector';
@@ -60,7 +58,7 @@ const Landing: React.FC = () => {
           <div className="text-center p-8 bg-white rounded-xl shadow-sm min-h-[240px] flex flex-col justify-between">
             <div>
               <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <SearchIcon className="h-6 w-6 text-orange-600" />
+                <Search className="h-6 w-6 text-orange-600" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Suivi facile</h3>
               <p className="text-gray-600">Suivez l'état de votre réparation avec un simple code de suivi. Obtenez des mises à jour en temps réel sur votre appareil.</p>
@@ -70,7 +68,7 @@ const Landing: React.FC = () => {
           <div className="text-center p-8 bg-white rounded-xl shadow-sm min-h-[240px] flex flex-col justify-between">
             <div>
               <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <ShieldIcon className="h-6 w-6 text-green-600" />
+                <Shield className="h-6 w-6 text-green-600" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Plateforme sécurisée</h3>
               <p className="text-gray-600">Vos données sont protégées par des mesures de sécurité et un chiffrement de niveau industriel.</p>
@@ -80,7 +78,7 @@ const Landing: React.FC = () => {
           <div className="text-center p-8 bg-white rounded-xl shadow-sm min-h-[240px] flex flex-col justify-between">
             <div>
               <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <ClockIcon className="h-6 w-6 text-purple-600" />
+                <Clock className="h-6 w-6 text-purple-600" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Mises à jour en temps réel</h3>
               <p className="text-gray-600">Recevez des notifications instantanées lorsque l'état de votre réparation change ou est terminé.</p>
