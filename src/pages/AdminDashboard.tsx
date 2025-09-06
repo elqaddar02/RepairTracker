@@ -155,7 +155,7 @@ const AdminDashboard: React.FC = () => {
                         <p className="text-sm font-medium text-gray-600">Total réparations</p>
                         <p className="text-2xl font-bold text-gray-900">{memoizedStats.totalRepairs}</p>
                       </div>
-                      <PackageIcon className="h-8 w-8 text-orange-500" />
+                      <Package className="h-8 w-8 text-orange-500" />
                     </div>
                   </CardContent>
                 </Card>
@@ -167,7 +167,7 @@ const AdminDashboard: React.FC = () => {
                         <p className="text-sm font-medium text-gray-600">En attente</p>
                         <p className="text-2xl font-bold text-gray-900">{memoizedStats.pendingRepairs}</p>
                       </div>
-                      <TrendingUpIcon className="h-8 w-8 text-orange-500" />
+                      <TrendingUp className="h-8 w-8 text-orange-500" />
                     </div>
                   </CardContent>
                 </Card>
@@ -191,7 +191,7 @@ const AdminDashboard: React.FC = () => {
                         <p className="text-sm font-medium text-gray-600">Magasins actifs</p>
                         <p className="text-2xl font-bold text-gray-900">{memoizedStats.activeStores}</p>
                       </div>
-                      <UsersIcon className="h-8 w-8 text-orange-500" />
+                      <Users className="h-8 w-8 text-orange-500" />
                     </div>
                   </CardContent>
                 </Card>
@@ -203,7 +203,7 @@ const AdminDashboard: React.FC = () => {
                         <p className="text-sm font-medium text-gray-600">Clients actifs</p>
                         <p className="text-2xl font-bold text-gray-900">{memoizedStats.activeClients}</p>
                       </div>
-                      <UsersIcon className="h-8 w-8 text-orange-500" />
+                      <Users className="h-8 w-8 text-orange-500" />
                     </div>
                   </CardContent>
                 </Card>
