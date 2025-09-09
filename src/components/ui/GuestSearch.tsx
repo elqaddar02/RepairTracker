@@ -26,7 +26,8 @@ const GuestSearch: React.FC<GuestSearchProps> = ({ stores, onSelectStore }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [locationPermission, setLocationPermission] = useState<'granted' | 'denied' | 'pending'>('pending');
-  const [mapCenter, setMapCenter] = useState<[number, number]>([31.6295, -7.9811]); // Default to Marrakech
+  const [mapCenter, setMapCenter] = useState<[number, number]>([34.020882, -6.84165]); 
+
 
   // Request location permission on component mount
   useEffect(() => {
