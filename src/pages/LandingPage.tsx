@@ -1,34 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Shield, Clock } from 'lucide-react';
 import Button from '../components/ui/Button';
-import Modal from '../components/ui/Modal';
-import RoleSelector from '../components/ui/RoleSelector';
-import { Link } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
-import { ClockIcon, SearchIcon, ShieldIcon } from 'lucide-react';
 
-const Landing: React.FC = () => {
+const LandingPage: React.FC = () => {
   const navigate = useNavigate();
-  const [showRoleSelector, setShowRoleSelector] = useState(false);
 
   const handleGetStarted = () => {
-    setShowRoleSelector(true);
+    navigate('/role-selection');
   };
 
-  const handleRoleSelect = (role: 'client' | 'store') => {
-    setShowRoleSelector(false);
-    if (role === 'store') {
-      navigate('/auth?tab=register&role=store');
-    } else {
-      // For client, show the client choice modal instead of direct registration
-      navigate('/client-flow');
-    }
-  };
-
-  const handleFindStores = () => {
-    setShowRoleSelector(false);
-    navigate('/find-stores');
+  const handleTrackRepair = () => {
+    navigate('/track');
   };
 
   return (
@@ -46,11 +30,9 @@ const Landing: React.FC = () => {
             <Button size="lg" className="w-full sm:w-auto" onClick={handleGetStarted}>
               Commencer
             </Button>
-            <Link to="/track">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                Track My Reparation
-              </Button>
-            </Link>
+            <Button variant="outline" size="lg" className="w-full sm:w-auto" onClick={handleTrackRepair}>
+              Track My Reparation
+            </Button>
           </div>
         </div>
 
@@ -87,21 +69,8 @@ const Landing: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* Role Selection Modal */}
-      <Modal 
-        isOpen={showRoleSelector} 
-        onClose={() => setShowRoleSelector(false)}
-        title="Commencer avec RepairTracker"
-        size="lg"
-      >
-        <RoleSelector 
-          onSelectRole={handleRoleSelect}
-          onFindStores={handleFindStores}
-        />
-      </Modal>
     </AppLayout>
   );
 };
 
-export default Landing;
+export default LandingPage;
