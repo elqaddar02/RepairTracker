@@ -35,8 +35,10 @@ const Input: React.FC<InputProps> = ({
         value={value}
         onChange={onChange}
         required={required}
-        className={`w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 ${
-          error ? 'border-red-500' : ''
+        className={`w-full px-3 py-2 rounded-lg transition-all duration-200 border focus:outline-none focus:ring-2 focus:border-transparent bg-white placeholder:text-gray-400 ${
+          error
+            ? 'border-red-400 focus:ring-red-400'
+            : 'border-gray-300 focus:ring-[var(--fixoo-primary)]'
         }`}
       />
       {error && (

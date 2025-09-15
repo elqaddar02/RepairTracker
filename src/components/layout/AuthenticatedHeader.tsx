@@ -54,7 +54,7 @@ const AuthenticatedHeader: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center space-x-2">
             <WrenchIcon className="h-8 w-8 text-orange-500" />
-            <span className="text-xl font-bold text-gray-900">RepairTracker</span>
+            <span className="text-xl font-bold text-gray-900">Fixoo</span>
           </Link>
 
           <div className="flex items-center space-x-4">

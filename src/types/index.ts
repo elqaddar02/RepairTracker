@@ -1,34 +1,39 @@
 export interface User {
-  id: string;
+  id: number;
+  username: string;
   email: string;
-  name?: string;
-  role: 'client' | 'store' | 'admin';
-  shopName?: string;
-  city?: string;
-  address?: string;
-  phone?: string;
-  status?: 'pending' | 'approved' | 'blocked';
+  firstName?: string;
+  lastName?: string;
+  phoneNumber?: string;
+  role: 'ADMIN' | 'MANAGER' | 'TECHNICIAN' | 'CUSTOMER';
+  status?: 'ACTIVE' | 'INACTIVE' | 'SUSPENDED';
+  storeId?: number;
+  storeName?: string;
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface Repair {
-  id: string;
-  trackingCode: string;
-  clientId: string;
-  clientName: string;
-  storeId: string;
-  storeName: string;
+  id: number;
+  repairNumber: string;
+  customerName: string;
+  customerPhone?: string;
+  customerEmail?: string;
   deviceType: string;
-  deviceBrand: string;
-  deviceModel: string;
-  issue: string;
-  status: 'waiting' | 'in_progress' | 'completed' | 'cancelled';
+  deviceModel?: string;
+  serialNumber?: string;
+  problemDescription: string;
   estimatedCost?: number;
-  finalCost?: number;
+  actualCost?: number;
+  status: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED';
+  storeId: number;
+  storeName?: string;
+  assignedTechnicianId?: number;
+  assignedTechnicianName?: string;
   createdAt: string;
   updatedAt: string;
   completedAt?: string;
-  timeline: RepairTimeline[];
+  timeline?: RepairTimeline[];
 }
 
 export interface RepairTimeline {
@@ -42,21 +47,33 @@ export interface RepairTimeline {
 export interface AuthContextType {
   user: User | null;
   token: string | null;
-  login: (email: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<void>;
   register: (userData: RegisterData) => Promise<void>;
   logout: () => void;
   loading: boolean;
 }
 
 export interface RegisterData {
+  username: string;
   email: string;
   password: string;
-  name?: string;
-  phone?: string;
-  role: 'client' | 'store';
-  shopName?: string;
-  city?: string;
-  address?: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber?: string;
+  role: 'ADMIN' | 'MANAGER' | 'TECHNICIAN' | 'CUSTOMER';
+  storeId?: number;
+}
+
+export interface Store {
+  id: number;
+  name: string;
+  address: string;
+  phoneNumber?: string;
+  email?: string;
+  managerName?: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface DashboardStats {

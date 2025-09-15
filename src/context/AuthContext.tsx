@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { User, AuthContextType, RegisterData } from '../types';
+import { authAPI } from '../api/auth';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -13,99 +14,73 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-// Static users data
-const staticUsers = [
-  {
-    id: '1',
-    email: 'client@demo.com',
-    password: 'password',
-    name: 'John Doe',
-    role: 'client' as const,
-    phone: '+1234567890',
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: '2',
-    email: 'store@demo.com',
-    password: 'password',
-    shopName: 'Tech Repair Store',
-    role: 'store' as const,
-    city: 'New York',
-    address: '123 Main St',
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: '3',
-    email: 'admin@demo.com',
-    password: 'password',
-    name: 'Admin User',
-    role: 'admin' as const,
-    createdAt: new Date().toISOString(),
-  },
-];
+// Auth response interface
+interface AuthResponse {
+  token: string;
+  type: string;
+  user: User;
+}
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Load user from localStorage on mount
+  // Load user and token from localStorage on mount
   useEffect(() => {
-    const savedUser = localStorage.getItem('currentUser');
-    if (savedUser) {
+    const savedUser = localStorage.getItem('user');
+    const savedToken = localStorage.getItem('token');
+    
+    if (savedUser && savedToken) {
       try {
         setUser(JSON.parse(savedUser));
+        setToken(savedToken);
       } catch (error) {
-        localStorage.removeItem('currentUser');
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
       }
     }
     setLoading(false);
   }, []);
 
-  const login = async (email: string, password: string): Promise<void> => {
-    const foundUser = staticUsers.find(u => u.email === email && u.password === password);
-    if (!foundUser) {
-      throw new Error('Invalid email or password');
+  const login = async (username: string, password: string): Promise<void> => {
+    try {
+      const response = await authAPI.login(username, password);
+      const authData: AuthResponse = response.data;
+      
+      setUser(authData.user);
+      setToken(authData.token);
+      localStorage.setItem('user', JSON.stringify(authData.user));
+      localStorage.setItem('token', authData.token);
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message || 'Login failed');
     }
-
-    const userToSave = { ...foundUser };
-    delete (userToSave as any).password; // Remove password from stored user
-    
-    setUser(userToSave);
-    localStorage.setItem('currentUser', JSON.stringify(userToSave));
   };
 
   const register = async (userData: RegisterData): Promise<void> => {
-    // Check if email already exists
-    if (staticUsers.some(u => u.email === userData.email)) {
-      throw new Error('Email already registered');
+    try {
+      const response = await authAPI.register(userData);
+      const authData: AuthResponse = response.data;
+      
+      setUser(authData.user);
+      setToken(authData.token);
+      localStorage.setItem('user', JSON.stringify(authData.user));
+      localStorage.setItem('token', authData.token);
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message || 'Registration failed');
     }
-
-    const newUser = {
-      id: Date.now().toString(),
-      email: userData.email,
-      role: userData.role,
-      createdAt: new Date().toISOString(),
-      ...(userData.role === 'client' 
-        ? { name: userData.name, phone: userData.phone }
-        : { shopName: userData.shopName, city: userData.city, address: userData.address }
-      ),
-    };
-
-    // Add to static users (in real app, this would be API call)
-    staticUsers.push({ ...newUser, password: userData.password } as any);
-    
-    setUser(newUser);
-    localStorage.setItem('currentUser', JSON.stringify(newUser));
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('currentUser');
+    setToken(null);
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
   };
 
   const value: AuthContextType = {
     user,
-    token: null,
+    token,
     login,
     register,
     logout,

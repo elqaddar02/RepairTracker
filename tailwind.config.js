@@ -4,29 +4,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: '#FFF7ED',
-          100: '#FFEDD5',
-          200: '#FED7AA',
-          300: '#FDBA74',
-          400: '#FB923C',
-          500: '#FF7A00',
-          600: '#EA580C',
-          700: '#C2410C',
-          800: '#9A3412',
-          900: '#7C2D12',
-        },
-        orange: {
-          50: '#FFF7ED',
-          100: '#FFEDD5',
-          200: '#FED7AA',
-          300: '#FDBA74',
-          400: '#FB923C',
-          500: '#FF7A00',
-          600: '#EA580C',
-          700: '#C2410C',
-          800: '#9A3412',
-          900: '#7C2D12',
+        // Fixoo brand palette
+        fixoo: {
+          primary: '#FF6B35',
+          secondary: '#FFB347',
+          accent: '#2D2D2D',
+          background: '#FFF7F0',
+          text: '#1A1A1A',
         }
       }
     },

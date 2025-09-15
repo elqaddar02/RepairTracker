@@ -40,7 +40,7 @@ const Landing: React.FC = () => {
             Suivez facilement la réparation de votre appareil
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            RepairTracker vous aide à suivre et gérer les réparations d'appareils en toute simplicité. Obtenez des mises à jour en temps réel, des notifications instantanées et une plateforme sécurisée pour les clients et les magasins.
+            Fixoo vous aide à suivre et gérer les réparations d'appareils en toute simplicité. Obtenez des mises à jour en temps réel, des notifications instantanées et une plateforme sécurisée pour les clients et les magasins.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button size="lg" className="w-full sm:w-auto" onClick={handleGetStarted}>
@@ -92,7 +92,7 @@ const Landing: React.FC = () => {
       <Modal 
         isOpen={showRoleSelector} 
         onClose={() => setShowRoleSelector(false)}
-        title="Commencer avec RepairTracker"
+        title="Commencer avec Fixoo"
         size="lg"
       >
         <RoleSelector 

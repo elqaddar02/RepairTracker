@@ -10,6 +10,9 @@ import ClientChoice from './pages/ClientChoice';
 import Guest from './pages/Guest';
 import TrackRepair from './pages/TrackRepair';
 import Auth from './pages/Auth';
+import RoleSelectionPage from './pages/RoleSelection';
+import ClientChoicePage from './pages/ClientChoice';
+import GuestPage from './pages/Guest';
 import ClientDashboard from './pages/ClientDashboard';
 import StoreDashboard from './pages/StoreDashboard';
 import AdminDashboard from './pages/AdminDashboard';
@@ -44,11 +47,12 @@ function App() {
               <Routes>
               {/* Public Routes */}
               <Route path="/" element={<LandingPage />} />
-              <Route path="/role-selection" element={<RoleSelection />} />
-              <Route path="/client-choice" element={<ClientChoice />} />
-              <Route path="/guest" element={<Guest />} />
+              <Route path="/role-selection" element={<RoleSelectionPage />} />
+              <Route path="/client-choice" element={<ClientChoicePage />} />
+              <Route path="/guest" element={<GuestPage />} />
               <Route path="/track" element={<TrackRepair />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/login" element={<Auth />} />
               <Route path="/find-stores" element={<StoreFinder />} />
               <Route path="/client-flow" element={<ClientFlow />} />
               <Route path="/old-landing" element={<Landing />} />

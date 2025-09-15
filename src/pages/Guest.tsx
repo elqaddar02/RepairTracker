@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import Button from '../components/ui/Button';
 import GuestSearch from '../components/ui/GuestSearch';
+import { motion } from 'framer-motion';
 import AppLayout from '../components/layout/AppLayout';
 import { stores, Store } from '../data/stores';
 
@@ -36,10 +37,12 @@ const GuestPage: React.FC = () => {
           </div>
         </div>
 
-        <GuestSearch 
-          stores={stores}
-          onSelectStore={handleSelectStore}
-        />
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+          <GuestSearch 
+            stores={stores}
+            onSelectStore={handleSelectStore}
+          />
+        </motion.div>
       </div>
     </AppLayout>
   );

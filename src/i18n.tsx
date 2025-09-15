@@ -167,7 +167,7 @@ const frenchTranslations = {
   
   // Landing page
   trackYourDevice: "Suivez facilement la réparation de votre appareil",
-  landingSubtitle: "RepairTracker vous aide à suivre et gérer les réparations d'appareils en toute simplicité. Obtenez des mises à jour en temps réel, des notifications instantanées et une plateforme sécurisée pour les clients et les magasins.",
+  landingSubtitle: "Fixoo vous aide à suivre et gérer les réparations d'appareils en toute simplicité. Obtenez des mises à jour en temps réel, des notifications instantanées et une plateforme sécurisée pour les clients et les magasins.",
   getStarted: "Commencer",
   trackMyRepair: "Suivre ma réparation",
   easyTracking: "Suivi facile",

@@ -13,7 +13,7 @@ const RoleSelector: React.FC<RoleSelectorProps> = ({ onSelectRole, onFindStores 
     <div className="space-y-6">
       <div className="text-center">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Comment souhaitez-vous continuer?</h2>
-        <p className="text-gray-600">Choisissez votre rôle pour commencer avec RepairTracker</p>
+        <p className="text-gray-600">Choisissez votre rôle pour commencer avec Fixoo</p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">

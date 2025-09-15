@@ -1,9 +1,23 @@
+/* Leaflet CSS must be first for Vite CSS @import rule */
+@import 'leaflet/dist/leaflet.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Leaflet CSS */
-@import 'leaflet/dist/leaflet.css';
+/* Fixoo base theme */
+:root {
+  --fixoo-primary: #FF6B35;
+  --fixoo-secondary: #FFB347;
+  --fixoo-accent: #2D2D2D;
+  --fixoo-background: #FFF7F0;
+  --fixoo-text: #1A1A1A;
+}
+
+body {
+  background-color: var(--fixoo-background);
+  color: var(--fixoo-text);
+}
 
 /* Custom animations for dropdown */
 @keyframes fade-in {

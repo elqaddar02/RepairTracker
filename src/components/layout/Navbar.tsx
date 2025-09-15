@@ -37,12 +37,17 @@ const Navbar: React.FC = () => {
   const currentLanguage = languages.find(l => l.code === lang);
 
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-200">
+    <nav className="bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/80 border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link to="/" className="flex items-center space-x-2">
-            <Wrench className="h-8 w-8 text-orange-500" />
-            <span className="text-xl font-bold text-gray-900">RepairTracker</span>
+          <Link to="/" className="flex items-center space-x-2 group">
+            <Wrench className="h-8 w-8" style={{ color: 'var(--fixoo-primary)' }} />
+            <span
+              className="text-xl font-extrabold bg-clip-text text-transparent"
+              style={{ backgroundImage: 'linear-gradient(90deg, #FF6B35, #FFB347)' }}
+            >
+              Fixoo
+            </span>
           </Link>
 
           <div className="flex items-center space-x-4">
@@ -50,25 +55,26 @@ const Navbar: React.FC = () => {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
-                className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 focus:outline-none focus:ring-2"
+                style={{ outlineColor: 'var(--fixoo-primary)' }}
               >
                 <Globe className="h-5 w-5 text-gray-600" />
               </button>
 
               {isLanguageDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-40 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50 animate-in fade-in-0 zoom-in-95">
+                <div className="absolute right-0 mt-2 w-44 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50 animate-in fade-in-0 zoom-in-95">
                   {languages.map((language) => (
                     <button
                       key={language.code}
                       onClick={() => handleLanguageChange(language.code as 'fr' | 'en' | 'ar')}
                       className={`w-full flex items-center space-x-3 px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors duration-150 ${
-                        lang === language.code ? 'bg-orange-50 text-orange-700' : 'text-gray-700'
+                        lang === language.code ? 'bg-[rgba(255,107,53,0.08)] text-[var(--fixoo-primary)]' : 'text-gray-700'
                       }`}
                     >
                       <span className="text-base">{language.flag}</span>
                       <span className="font-medium">{language.name}</span>
                       {lang === language.code && (
-                        <div className="ml-auto w-2 h-2 bg-orange-600 rounded-full"></div>
+                        <div className="ml-auto w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--fixoo-primary)' }}></div>
                       )}
                     </button>
                   ))}
@@ -81,7 +87,7 @@ const Navbar: React.FC = () => {
                 <div className="flex items-center space-x-2">
                   <User className="h-5 w-5 text-gray-600" />
                   <span className="text-sm text-gray-700">{user.name || user.shopName || user.email}</span>
-                  <span className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
+                  <span className="text-xs px-2 py-1 rounded-full border" style={{ background: 'rgba(255,107,53,0.08)', color: 'var(--fixoo-primary)', borderColor: 'rgba(255,107,53,0.25)' }}>
                     {user.role.toUpperCase()}
                   </span>
                 </div>
@@ -108,6 +114,7 @@ const Navbar: React.FC = () => {
           </div>
         </div>
       </div>
+      <div className="h-[2px] w-full" style={{ backgroundImage: 'linear-gradient(90deg, rgba(255,107,53,0.3), rgba(255,179,71,0.3))' }} />
     </nav>
   );
 };

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import Button from '../components/ui/Button';
 import RoleSelection from '../components/ui/RoleSelection';
+import { motion } from 'framer-motion';
 import AppLayout from '../components/layout/AppLayout';
 
 const RoleSelectionPage: React.FC = () => {
@@ -36,7 +37,9 @@ const RoleSelectionPage: React.FC = () => {
           </div>
         </div>
 
-        <RoleSelection onSelectRole={handleSelectRole} />
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+          <RoleSelection onSelectRole={handleSelectRole} />
+        </motion.div>
       </div>
     </AppLayout>
   );

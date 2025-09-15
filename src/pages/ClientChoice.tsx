@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import Button from '../components/ui/Button';
 import ClientChoice from '../components/ui/ClientChoice';
+import { motion } from 'framer-motion';
 import AppLayout from '../components/layout/AppLayout';
 
 const ClientChoicePage: React.FC = () => {
@@ -36,10 +37,12 @@ const ClientChoicePage: React.FC = () => {
           </div>
         </div>
 
-        <ClientChoice 
-          onLogin={handleLogin}
-          onContinueAsGuest={handleContinueAsGuest}
-        />
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+          <ClientChoice 
+            onLogin={handleLogin}
+            onContinueAsGuest={handleContinueAsGuest}
+          />
+        </motion.div>
       </div>
     </AppLayout>
   );
